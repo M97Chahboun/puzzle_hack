@@ -22,16 +22,13 @@ class PuzzleCard extends StatefulWidget {
   State<PuzzleCard> createState() => _PuzzleCardState();
 }
 
-Curve currentCurve = Curves.bounceInOut;
-
 class _PuzzleCardState extends State<PuzzleCard> {
+  Curve currentCurve = Curves.bounceInOut;
+
   @override
   Widget build(BuildContext context) {
-    return AnimatedPositioned(
-      top: widget.y.isNegative ? null : widget.y,
-      right: !widget.x.isNegative ? null : widget.x,
-      bottom: !widget.y.isNegative ? null : widget.y,
-      left: widget.x.isNegative ? null : widget.x - 50,
+    return AnimatedAlign(
+      alignment: Alignment(widget.x, widget.y),
       duration: const Duration(milliseconds: 200),
       curve: currentCurve,
       child: Padding(
@@ -40,23 +37,26 @@ class _PuzzleCardState extends State<PuzzleCard> {
           onHorizontalDragEnd: (details) {
             if (details.velocity.pixelsPerSecond.dx >
                 details.velocity.pixelsPerSecond.dy) {
-              if (Empty(y: widget.y, x: widget.x + 100) ==context.s.empty) {
-                widget.x += 100;
+              if (Empty(y: widget.y, x: widget.x + context.s.addX) ==
+                  context.s.empty) {
+                widget.x += context.s.addX;
                 setState(() {});
                 changeOrder();
-               context.s.empty =context.s.empty.copyWith(
-                  x: widget.x - 100,
+                context.s.empty = context.s.empty.copyWith(
+                  x: widget.x - context.s.addX,
                 );
               } else {
                 shakeX();
               }
             } else if (details.velocity.pixelsPerSecond.dx <
                 details.velocity.pixelsPerSecond.dy) {
-              if (Empty(y: widget.y, x: widget.x + -100) ==context.s.empty) {
-                widget.x += -100;
+              if (Empty(y: widget.y, x: widget.x + -context.s.addX) ==
+                  context.s.empty) {
+                widget.x += -context.s.addX;
                 setState(() {});
                 changeOrder();
-               context.s.empty =context.s.empty.copyWith(x: widget.x + 100);
+                context.s.empty =
+                    context.s.empty.copyWith(x: widget.x + context.s.addX);
               } else {
                 shakeX();
               }
@@ -65,24 +65,26 @@ class _PuzzleCardState extends State<PuzzleCard> {
           onVerticalDragEnd: (details) {
             if (details.velocity.pixelsPerSecond.dx >
                 details.velocity.pixelsPerSecond.dy) {
-              if (Empty(y: widget.y + -100, x: widget.x) ==context.s.empty) {
-                widget.y += -100;
+              if (Empty(y: widget.y + context.s.addY, x: widget.x) ==
+                  context.s.empty) {
+                widget.y += -context.s.addY;
                 setState(() {});
                 changeOrder();
-               context.s.empty =context.s.empty.copyWith(
-                  y: widget.y + 100,
+                context.s.empty = context.s.empty.copyWith(
+                  y: widget.y + context.s.addY,
                 );
               } else {
                 shakeY();
               }
             } else if (details.velocity.pixelsPerSecond.dx <
                 details.velocity.pixelsPerSecond.dy) {
-              if (Empty(y: widget.y + 100, x: widget.x) ==context.s.empty) {
-                widget.y += 100;
+              if (Empty(y: widget.y + context.s.addY, x: widget.x) ==
+                  context.s.empty) {
+                widget.y += context.s.addY;
                 setState(() {});
                 changeOrder();
-               context.s.empty =context.s.empty.copyWith(
-                  y: widget.y - 100,
+                context.s.empty = context.s.empty.copyWith(
+                  y: widget.y - context.s.addY,
                 );
               } else {
                 shakeY();
@@ -90,10 +92,14 @@ class _PuzzleCardState extends State<PuzzleCard> {
             }
           },
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 90.0, maxHeight: 90.0),
+            constraints: const BoxConstraints(
+                maxWidth: 90.0,
+                maxHeight: 90.0,
+                minHeight: 52.0,
+                minWidth: 52.0),
             child: Container(
-              height: context.width * 0.18,
-              width: context.width * 0.18,
+              height: context.width * 0.16,
+              width: context.width * 0.16,
               alignment: Alignment.center,
               color: Colors.blue,
               child: Text(
@@ -108,11 +114,11 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void shakeX() {
-    widget.x += 5;
+    widget.x += 0.05;
     currentCurve = const ShakeCurve();
     setState(() {});
     Timer.periodic(const Duration(milliseconds: 200), (timer) {
-      widget.x -= 5;
+      widget.x -= 0.05;
       setState(() {});
       currentCurve = Curves.bounceInOut;
       timer.cancel();
@@ -120,11 +126,11 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void shakeY() {
-    widget.y += 5;
+    widget.y += 0.05;
     currentCurve = const ShakeCurve();
     setState(() {});
     Timer.periodic(const Duration(milliseconds: 200), (timer) {
-      widget.y -= 5;
+      widget.y -= 0.05;
       setState(() {});
       currentCurve = Curves.bounceInOut;
       timer.cancel();
@@ -132,12 +138,12 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void changeOrder() {
-    int indexValue =context.s.currentOrder.indexOf(widget.value);
-    int indexEmpty =context.s.currentOrder.indexOf(Singleton().empty.value);
-   context.s.currentOrder
+    int indexValue = context.s.currentOrder.indexOf(widget.value);
+    int indexEmpty = context.s.currentOrder.indexOf(Singleton().empty.value);
+    context.s.currentOrder
       ..remove(Singleton().empty.value)
-      ..insert(indexValue,context.s.empty.value);
-   context.s.currentOrder
+      ..insert(indexValue, context.s.empty.value);
+    context.s.currentOrder
       ..remove(widget.value)
       ..insert(indexEmpty, widget.value);
     List correct = List.generate(16, (index) => index + 1);
