@@ -34,11 +34,11 @@ class Puzzle extends StatelessWidget {
           drawer: context.isMobile ? History() : null,
           body: Responsive(
               mobile: SizedBox(
-                  width: context.width, child: PuzzleGame(start: start)),
+                  width: context.width, child: const PuzzleGame()),
               another: Row(
                 children: [
                   Flexible(child: History()),
-                  PuzzleGame(start: start)
+                  const PuzzleGame()
                 ],
               )),
         ));

@@ -7,7 +7,7 @@ class Singleton {
   static final Singleton _singleton = Singleton._internal();
 
   Empty empty = Empty();
-  List correctOrder = List.generate(16, (index) => index + 1);
+  List<int> correctOrder = List.generate(16, (index) => index + 1);
   List<int> currentOrder = [];
   List<int> initShuffle = [];
   final McValue<bool> restart = false.mini;

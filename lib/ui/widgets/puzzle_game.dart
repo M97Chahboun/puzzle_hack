@@ -7,7 +7,6 @@ import 'package:puzzle_hack/utils/empty.dart';
 class PuzzleGame extends StatelessWidget {
   const PuzzleGame({
     Key? key,
-    required this.start,
   }) : super(key: key);
 
   final double col = 4;
@@ -95,7 +94,6 @@ class PuzzleGame extends StatelessWidget {
           ),
         );
       },
-      valueListenable: start,
     );
   }
 }
