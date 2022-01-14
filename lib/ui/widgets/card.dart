@@ -41,6 +41,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
                   context.s.empty) {
                 widget.x += context.s.addX;
                 setState(() {});
+                setLog("right");
                 changeOrder();
                 context.s.empty = context.s.empty.copyWith(
                   x: widget.x - context.s.addX,
@@ -54,6 +55,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
                   context.s.empty) {
                 widget.x += -context.s.addX;
                 setState(() {});
+                setLog("left");
                 changeOrder();
                 context.s.empty =
                     context.s.empty.copyWith(x: widget.x + context.s.addX);
@@ -65,10 +67,11 @@ class _PuzzleCardState extends State<PuzzleCard> {
           onVerticalDragEnd: (details) {
             if (details.velocity.pixelsPerSecond.dx >
                 details.velocity.pixelsPerSecond.dy) {
-              if (Empty(y: widget.y + context.s.addY, x: widget.x) ==
+              if (Empty(y: widget.y - context.s.addY, x: widget.x) ==
                   context.s.empty) {
-                widget.y += -context.s.addY;
+                widget.y -= context.s.addY;
                 setState(() {});
+                setLog("up");
                 changeOrder();
                 context.s.empty = context.s.empty.copyWith(
                   y: widget.y + context.s.addY,
@@ -82,6 +85,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
                   context.s.empty) {
                 widget.y += context.s.addY;
                 setState(() {});
+                setLog("down");
                 changeOrder();
                 context.s.empty = context.s.empty.copyWith(
                   y: widget.y - context.s.addY,
@@ -114,11 +118,11 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void shakeX() {
-    widget.x += 0.05;
+    widget.x += 0.01;
     currentCurve = const ShakeCurve();
     setState(() {});
     Timer.periodic(const Duration(milliseconds: 200), (timer) {
-      widget.x -= 0.05;
+      widget.x -= 0.01;
       setState(() {});
       currentCurve = Curves.bounceInOut;
       timer.cancel();
@@ -126,15 +130,20 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void shakeY() {
-    widget.y += 0.05;
+    widget.y += 0.01;
     currentCurve = const ShakeCurve();
     setState(() {});
     Timer.periodic(const Duration(milliseconds: 200), (timer) {
-      widget.y -= 0.05;
+      widget.y -= 0.01;
       setState(() {});
       currentCurve = Curves.bounceInOut;
       timer.cancel();
     });
+  }
+
+  void setLog(String to) {
+    context.s.log.v.add("Move ${widget.value} to $to");
+    context.s.log.rebuildWidget();
   }
 
   void changeOrder() {
@@ -148,7 +157,12 @@ class _PuzzleCardState extends State<PuzzleCard> {
       ..insert(indexEmpty, widget.value);
     List correct = List.generate(16, (index) => index + 1);
     if (Singleton().currentOrder.isSameOrder(correct)) {
-      print("congrlmfzf");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog();
+        },
+      );
     }
   }
 }

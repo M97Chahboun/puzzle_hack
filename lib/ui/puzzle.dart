@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puzzle_hack/extensions.dart';
+import 'package:puzzle_hack/ui/widgets/history.dart';
 import 'package:puzzle_hack/ui/widgets/puzzle_game.dart';
 import 'package:puzzle_hack/utils/responsive.dart';
 
@@ -13,7 +14,6 @@ class Puzzle extends StatelessWidget {
     return Focus(
         onKey: (FocusNode node, RawKeyEvent event) {
           KeyEventResult result = KeyEventResult.ignored;
-          print(event);
           return result;
         },
         child: Scaffold(
@@ -31,20 +31,13 @@ class Puzzle extends StatelessWidget {
                       icon: const Icon(Icons.menu)),
                 )
               : null,
-          drawer: context.isMobile
-              ? Container(
-                  color: Colors.blue,
-                )
-              : null,
+          drawer: context.isMobile ? History() : null,
           body: Responsive(
               mobile: SizedBox(
                   width: context.width, child: PuzzleGame(start: start)),
               another: Row(
                 children: [
-                  Flexible(
-                      child: Container(
-                    color: Colors.blue,
-                  )),
+                  Flexible(child: History()),
                   PuzzleGame(start: start)
                 ],
               )),

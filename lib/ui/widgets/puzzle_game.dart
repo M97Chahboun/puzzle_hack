@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:puzzle_hack/ui/widgets/card.dart';
 import 'package:puzzle_hack/extensions.dart';
 import 'package:puzzle_hack/utils/empty.dart';
-import 'package:puzzle_hack/utils/responsive.dart';
 
 class PuzzleGame extends StatelessWidget {
   const PuzzleGame({
@@ -28,9 +27,9 @@ class PuzzleGame extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: 511, maxWidth: 511),
-                  child: Container(
-                    color: Colors.black,
+                  constraints:
+                      const BoxConstraints(maxHeight: 511, maxWidth: 511),
+                  child: SizedBox(
                     height: context.width,
                     width: context.width,
                     child: Stack(
@@ -42,7 +41,6 @@ class PuzzleGame extends StatelessWidget {
                       }
                       x += context.s.addY;
                       if (index != context.s.correctOrder.last) {
-                        print("$index = $x");
                         return PuzzleCard(x, y, index);
                       } else {
                         context.s.empty = Empty(

@@ -1,4 +1,5 @@
 import 'empty.dart';
+import 'package:mc/mc.dart';
 
 class Singleton {
   static final Singleton _singleton = Singleton._internal();
@@ -8,6 +9,7 @@ class Singleton {
   List<int> currentOrder = [];
   final double addX = 0.5;
   final double addY = 0.5;
+  McValue<List<String>> log = McValue([]);
   factory Singleton() {
     return _singleton;
   }
