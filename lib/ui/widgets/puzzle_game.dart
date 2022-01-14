@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_hack/ui/widgets/card.dart';
+import 'package:mc/mc.dart';
+import 'package:puzzle_hack/ui/widgets/puzzle_card.dart';
 import 'package:puzzle_hack/extensions.dart';
 import 'package:puzzle_hack/utils/empty.dart';
 
@@ -10,12 +11,12 @@ class PuzzleGame extends StatelessWidget {
   }) : super(key: key);
 
   final double col = 4;
-  final ValueNotifier start;
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      builder: (context, _, __) {
+    return McMV(
+      context.s.restart,
+      () {
         const double initX = -1.25;
         double initY = -1.0;
         double x = initX;
@@ -26,6 +27,43 @@ class PuzzleGame extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    McMV(
+                        context.s.moves,
+                        () => Text(context.s.moves.v.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(fontWeight: FontWeight.bold))),
+                    Text(" Moves |",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(fontWeight: FontWeight.bold)),
+                    McMV(context.s.timer, () {
+                      String sec = context.s.timer.seconds.two.toString();
+                      String min = context.s.timer.minutes.two.toString();
+                      String hr = context.s.timer.hours.two.toString();
+                      return Row(
+                        children: [
+                          const Icon(
+                            Icons.timer,
+                            size: 40.0,
+                          ),
+                          Text(
+                            "$sec:$min:$hr",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      );
+                    }),
+                  ],
+                ),
                 ConstrainedBox(
                   constraints:
                       const BoxConstraints(maxHeight: 511, maxWidth: 511),

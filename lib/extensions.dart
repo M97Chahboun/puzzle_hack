@@ -18,3 +18,11 @@ extension SameOrder on List {
     return result;
   }
 }
+
+extension TwoInt on int {
+  String get two => this < 9 ? "0$this" : toString();
+}
+
+extension ToInt on String {
+  int get i => int.parse(this);
+}
