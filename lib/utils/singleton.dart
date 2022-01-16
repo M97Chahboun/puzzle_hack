@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:puzzle_hack/utils/timer.dart';
 
 import 'empty.dart';
@@ -16,6 +17,7 @@ class Singleton {
   final double addY = 0.5;
   McValue<List<String>> log = McValue([]);
   McValue<int> moves = 0.mini;
+  McValue<ThemeMode> themeMode = ThemeMode.system.mini;
   factory Singleton() {
     return _singleton;
   }

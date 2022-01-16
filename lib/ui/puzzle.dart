@@ -45,10 +45,10 @@ class Puzzle extends StatelessWidget {
   }
 
   void shuffle(BuildContext context) {
-    context.s.currentOrder.clear();
-    context.s.correctOrder.remove(16);
-    context.s.correctOrder.shuffle();
-    context.s.correctOrder.insert(15, 16);
+    global.currentOrder.clear();
+    global.correctOrder.remove(16);
+    global.correctOrder.shuffle();
+    global.correctOrder.insert(15, 16);
     start.value = !start.value;
   }
 }

@@ -25,6 +25,7 @@ class PuzzleCard extends StatefulWidget {
 class _PuzzleCardState extends State<PuzzleCard> {
   Curve currentCurve = Curves.bounceInOut;
   final List<int> correct = List.generate(16, (index) => index + 1);
+
   @override
   void initState() {
     controlle.add(CardControl(toRight, toLeft, toUp, toDown));
@@ -41,20 +42,20 @@ class _PuzzleCardState extends State<PuzzleCard> {
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
           onHorizontalDragEnd: (details) {
-            if (!context.s.timer.timer.isActive &&
-                !correct.isSameOrder(context.s.currentOrder)) {
-              context.s.timer.startTimer();
+            if (!global.timer.timer.isActive &&
+                !correct.isSameOrder(global.currentOrder)) {
+              global.timer.startTimer();
             }
-            if (context.s.timer.timer.isActive) {
+            if (global.timer.timer.isActive) {
               horizontalSwipe(details, context);
             }
           },
           onVerticalDragEnd: (details) {
-            if (!context.s.timer.timer.isActive &&
-                !correct.isSameOrder(context.s.currentOrder)) {
-              context.s.timer.startTimer();
+            if (!global.timer.timer.isActive &&
+                !correct.isSameOrder(global.currentOrder)) {
+              global.timer.startTimer();
             }
-            if (context.s.timer.timer.isActive) {
+            if (global.timer.timer.isActive) {
               verticalSwipe(details, context);
             }
           },
@@ -67,8 +68,10 @@ class _PuzzleCardState extends State<PuzzleCard> {
             child: Container(
               height: context.width * 0.16,
               width: context.width * 0.16,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(9.0))),
               alignment: Alignment.center,
-              color: Theme.of(context).primaryColor,
               child: Text(
                 widget.value.toString(),
                 style: Theme.of(context).textTheme.headline5,
@@ -83,14 +86,14 @@ class _PuzzleCardState extends State<PuzzleCard> {
   void verticalSwipe(DragEndDetails details, BuildContext context) {
     if (details.velocity.pixelsPerSecond.dx >
         details.velocity.pixelsPerSecond.dy) {
-      if (Empty(y: widget.y - context.s.addY, x: widget.x) == context.s.empty) {
+      if (Empty(y: widget.y - global.addY, x: widget.x) == global.empty) {
         toUp();
       } else {
         shakeY();
       }
     } else if (details.velocity.pixelsPerSecond.dx <
         details.velocity.pixelsPerSecond.dy) {
-      if (Empty(y: widget.y + context.s.addY, x: widget.x) == context.s.empty) {
+      if (Empty(y: widget.y + global.addY, x: widget.x) == global.empty) {
         toDown();
       } else {
         shakeY();
@@ -101,15 +104,14 @@ class _PuzzleCardState extends State<PuzzleCard> {
   void horizontalSwipe(DragEndDetails details, BuildContext context) {
     if (details.velocity.pixelsPerSecond.dx >
         details.velocity.pixelsPerSecond.dy) {
-      if (Empty(y: widget.y, x: widget.x + context.s.addX) == context.s.empty) {
+      if (Empty(y: widget.y, x: widget.x + global.addX) == global.empty) {
         toRight();
       } else {
         shakeX();
       }
     } else if (details.velocity.pixelsPerSecond.dx <
         details.velocity.pixelsPerSecond.dy) {
-      if (Empty(y: widget.y, x: widget.x + -context.s.addX) ==
-          context.s.empty) {
+      if (Empty(y: widget.y, x: widget.x + -global.addX) == global.empty) {
         toLeft();
       } else {
         shakeX();
@@ -118,45 +120,45 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void toDown() {
-    widget.y += context.s.addY;
+    widget.y += global.addY;
     setState(() {});
     setLog("down");
     changeOrder();
-    context.s.empty = context.s.empty.copyWith(
-      y: widget.y - context.s.addY,
+    global.empty = global.empty.copyWith(
+      y: widget.y - global.addY,
     );
-    context.s.moves.v++;
+    global.moves.v++;
   }
 
   void toUp() {
-    widget.y -= context.s.addY;
+    widget.y -= global.addY;
     setState(() {});
     setLog("up");
     changeOrder();
-    context.s.empty = context.s.empty.copyWith(
-      y: widget.y + context.s.addY,
+    global.empty = global.empty.copyWith(
+      y: widget.y + global.addY,
     );
-    context.s.moves.v++;
+    global.moves.v++;
   }
 
   void toLeft() {
-    widget.x += -context.s.addX;
+    widget.x += -global.addX;
     setState(() {});
     setLog("left");
     changeOrder();
-    context.s.empty = context.s.empty.copyWith(x: widget.x + context.s.addX);
-    context.s.moves.v++;
+    global.empty = global.empty.copyWith(x: widget.x + global.addX);
+    global.moves.v++;
   }
 
   void toRight() {
-    widget.x += context.s.addX;
+    widget.x += global.addX;
     setState(() {});
     setLog("right");
     changeOrder();
-    context.s.empty = context.s.empty.copyWith(
-      x: widget.x - context.s.addX,
+    global.empty = global.empty.copyWith(
+      x: widget.x - global.addX,
     );
-    context.s.moves.v++;
+    global.moves.v++;
   }
 
   void shakeX() {
@@ -184,28 +186,28 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void setLog(String to) {
-    String sec = context.s.timer.seconds.two.toString();
-    String min = context.s.timer.minutes.two.toString();
-    String hr = context.s.timer.hours.two.toString();
-    context.s.log.v.add("${widget.value}:$to:$sec|$min|$hr");
-    context.s.log.rebuildWidget();
+    String sec = global.timer.millseconds.two.toString();
+    String min = global.timer.seconds.two.toString();
+    String hr = global.timer.minutes.two.toString();
+    global.log.v.add("${widget.value}:$to:$sec|$min|$hr");
+    global.log.rebuildWidget();
   }
 
   void changeOrder() {
-    int indexValue = context.s.currentOrder.indexOf(widget.value);
-    int indexEmpty = context.s.currentOrder.indexOf(Singleton().empty.value);
-    context.s.currentOrder
+    int indexValue = global.currentOrder.indexOf(widget.value);
+    int indexEmpty = global.currentOrder.indexOf(Singleton().empty.value);
+    global.currentOrder
       ..remove(Singleton().empty.value)
-      ..insert(indexValue, context.s.empty.value);
-    context.s.currentOrder
+      ..insert(indexValue, global.empty.value);
+    global.currentOrder
       ..remove(widget.value)
       ..insert(indexEmpty, widget.value);
     if (Singleton().currentOrder.isSameOrder(correct) &&
-        context.s.timer.timer.isActive) {
+        global.timer.timer.isActive) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          context.s.timer.pause();
+          global.timer.pause();
           return AlertDialog(
             content: Text("Good job"),
           );

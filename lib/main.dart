@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mc/mc.dart';
+import 'package:puzzle_hack/extensions.dart';
 import 'package:puzzle_hack/ui/home.dart';
 
 void main() {
@@ -10,11 +12,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme:
-          ThemeData(backgroundColor: Colors.white, primaryColor: Colors.blue),
-      home: Home(),
-    );
+    return McMV(
+        global.themeMode,
+        () => MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              themeMode: global.themeMode.v,
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                canvasColor: const Color(0xFF121212),
+                backgroundColor: const Color(0xFF121212),
+                cardColor: const Color(0xFF1E1E1E),
+              ),
+              home: Home(),
+            ));
   }
 }

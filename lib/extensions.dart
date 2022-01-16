@@ -5,8 +5,6 @@ extension ToScreenSize on BuildContext {
   double get height => MediaQuery.of(this).size.height;
   double get width => MediaQuery.of(this).size.width;
   bool get isMobile => MediaQuery.of(this).size.width < 850;
-
-  Singleton get s => Singleton();
 }
 
 extension SameOrder on List {
@@ -26,3 +24,11 @@ extension TwoInt on int {
 extension ToInt on String {
   int get i => int.parse(this);
 }
+
+extension Global on State{
+  Singleton get global => Singleton();
+}
+extension GlobalLess on StatelessWidget{
+  Singleton get global => Singleton();
+}
+

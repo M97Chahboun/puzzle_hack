@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:puzzle_hack/extensions.dart';
 class Responsive extends StatelessWidget {
   final Widget mobile;
   final Widget another;
@@ -12,8 +12,8 @@ class Responsive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
-    if (_size.width >= 850) {
+    final double width = context.width;
+    if (width >= 850) {
       return another;
     } else {
       return mobile;

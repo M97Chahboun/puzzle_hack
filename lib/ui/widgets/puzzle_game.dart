@@ -4,20 +4,31 @@ import 'package:puzzle_hack/ui/widgets/puzzle_card.dart';
 import 'package:puzzle_hack/extensions.dart';
 import 'package:puzzle_hack/utils/empty.dart';
 
-class PuzzleGame extends StatelessWidget {
+class PuzzleGame extends StatefulWidget {
   const PuzzleGame({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<PuzzleGame> createState() => _PuzzleGameState();
+}
+
+class _PuzzleGameState extends State<PuzzleGame> {
   final double col = 4;
+  @override
+  void didChangeDependencies() {
+    print(global.currentOrder);
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     return McMV(
-      context.s.restart,
+      global.restart,
       () {
+        global.currentOrder.clear();
         const double initX = -1.25;
-        double initY = -1.0;
+        double initY = -0.75;
         double x = initX;
         double y = initY;
         return Padding(
@@ -26,61 +37,68 @@ class PuzzleGame extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    McMV(
-                        context.s.moves,
-                        () => Text(context.s.moves.v.toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4!
-                                .copyWith(fontWeight: FontWeight.bold))),
-                    Text(" Moves |",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4!
-                            .copyWith(fontWeight: FontWeight.bold)),
-                    McMV(context.s.timer, () {
-                      String sec = context.s.timer.seconds.two.toString();
-                      String min = context.s.timer.minutes.two.toString();
-                      String hr = context.s.timer.hours.two.toString();
-                      return Row(
-                        children: [
-                          const Icon(
-                            Icons.timer,
-                            size: 40.0,
-                          ),
-                          Text(
-                            "$sec:$min:$hr",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      );
-                    }),
-                  ],
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      McMV(
+                          global.moves,
+                          () => Text(global.moves.v.toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline4!
+                                  .copyWith(fontWeight: FontWeight.bold))),
+                      Text(" Moves |",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(fontWeight: FontWeight.bold)),
+                      McMV(global.timer, () {
+                        String millsec =
+                            global.timer.millseconds.two.toString();
+                        String sec = global.timer.seconds.two.toString();
+                        String min = global.timer.minutes.two.toString();
+                        return Row(
+                          children: [
+                            const Icon(
+                              Icons.timer,
+                              size: 40.0,
+                            ),
+                            Text(
+                              "$millsec:$sec:$min",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline4!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        );
+                      }),
+                    ],
+                  ),
                 ),
                 ConstrainedBox(
                   constraints:
                       const BoxConstraints(maxHeight: 511, maxWidth: 511),
-                  child: SizedBox(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor)),
                     height: context.width,
                     width: context.width,
                     child: Stack(
-                        children: context.s.correctOrder.map((index) {
-                      context.s.currentOrder.add(index);
-                      if (x == (context.s.addX * col) + initX) {
+                        children: global.correctOrder.map((index) {
+                      global.currentOrder.add(index);
+
+                      if (x == (global.addX * col) + initX) {
                         x = initX;
-                        y += context.s.addY;
+                        y += global.addY;
                       }
-                      x += context.s.addY;
-                      if (index != context.s.correctOrder.last) {
+                      x += global.addY;
+                      if (index != global.correctOrder.last) {
                         return PuzzleCard(x, y, index);
                       } else {
-                        context.s.empty = Empty(
+                        global.empty = Empty(
                           x: x,
                           y: y,
                         );
