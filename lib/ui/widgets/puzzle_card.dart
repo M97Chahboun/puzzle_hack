@@ -78,22 +78,25 @@ class _PuzzleCardState extends State<PuzzleCard> {
               }
             }
           },
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-                maxWidth: 90.0,
-                maxHeight: 90.0,
-                minHeight: 52.0,
-                minWidth: 52.0),
-            child: Container(
-              height: context.width * 0.16,
-              width: context.width * 0.16,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: const BorderRadius.all(Radius.circular(9.0))),
-              alignment: Alignment.center,
-              child: Text(
-                widget.value.toString(),
-                style: Theme.of(context).textTheme.headline5,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                  maxWidth: 90.0,
+                  maxHeight: 90.0,
+                  minHeight: 52.0,
+                  minWidth: 52.0),
+              child: Container(
+                height: context.width * 0.16,
+                width: context.width * 0.16,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).canvasColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(9.0))),
+                alignment: Alignment.center,
+                child: Text(
+                  widget.value.toString(),
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ),
             ),
           ),

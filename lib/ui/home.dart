@@ -73,15 +73,8 @@ class Home extends StatelessWidget {
           another: Row(
             children: [
               Flexible(child: History()),
-              Stack(
-                children: const [
-                  PuzzleGame(),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: ThemeIcon(),
-                  )
-                ],
-              )
+              const PuzzleGame(),
+            
             ],
           )),
     );

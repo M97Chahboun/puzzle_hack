@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
 import 'package:puzzle_hack/ui/widgets/puzzle_card.dart';
 import 'package:puzzle_hack/extensions.dart';
+import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
 import 'package:puzzle_hack/utils/empty.dart';
 
 class PuzzleGame extends StatefulWidget {
@@ -76,14 +77,19 @@ class _PuzzleGameState extends State<PuzzleGame> {
                           ],
                         );
                       }),
+                      if (!context.isMobile) const ThemeIcon()
                     ],
                   ),
                 ),
+                const SizedBox(height: 15.0),
                 ConstrainedBox(
                   constraints:
                       const BoxConstraints(maxHeight: 511, maxWidth: 511),
                   child: Container(
                     decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(18.0)),
                         border:
                             Border.all(color: Theme.of(context).primaryColor)),
                     height: context.width,
