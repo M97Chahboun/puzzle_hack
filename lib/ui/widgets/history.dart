@@ -4,19 +4,28 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
 import 'package:puzzle_hack/extensions.dart';
-import 'package:puzzle_hack/ui/widgets/puzzle_card.dart';
 
 class History extends StatelessWidget {
-  final ScrollController _scrollController = ScrollController();
+  ScrollController _scrollController = ScrollController();
   int index = 0;
   final bool showReplayButton;
   double? max;
   final bool showLast;
-  final McValue<bool> replay = false.mini;
 
   History(
       {Key? key, this.showReplayButton = true, this.showLast = true, this.max})
       : super(key: key);
+
+  void _showLastItem() {
+    if (showLast) {
+      if (_scrollController.positions.isNotEmpty) {
+        _scrollController.jumpTo(
+          _scrollController.position.maxScrollExtent + 100,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     max ??= context.height;
@@ -41,13 +50,8 @@ class History extends StatelessWidget {
                         String icon = log[1];
                         String time = log[2];
                         time = time.replaceAll("|", ":");
-                        global.log.registerListener(miniRebuild, () {
-                          if (showLast) {
-                            _scrollController.jumpTo(
-                              _scrollController.position.maxScrollExtent + 100,
-                            );
-                          }
-                        });
+                        global.log.removeListener(miniRebuild, _showLastItem);
+                        global.log.registerListener(miniRebuild, _showLastItem);
 
                         return TweenAnimationBuilder<double>(
                           duration: const Duration(milliseconds: 400),
@@ -86,7 +90,7 @@ class History extends StatelessWidget {
                                       const Text(" to "),
                                       Icon(
                                         getIcon(icon),
-                                        color: Theme.of(context).primaryColor,
+                                        color: Theme.of(context).iconTheme.color
                                       ),
                                       const Text(" in "),
                                       Text(time)
@@ -103,20 +107,20 @@ class History extends StatelessWidget {
             if (showReplayButton)
               Align(
                 alignment: const Alignment(0, 0.9),
-                child: McMV(replay, () {
+                child: McMV(global.replay, () {
                   return FloatingActionButton(
                     backgroundColor: Theme.of(context).primaryColor,
                     onPressed: () {
                       index = 0;
-                      if (replay.v) {
-                        replay.v = false;
+                      if (global.replay.v) {
+                        global.replay.v = false;
                       } else {
                         replayGame(context);
-                        replay.v = true;
+                        global.replay.v = true;
                       }
                     },
                     child: Icon(
-                      replay.v ? Icons.pause : Icons.play_arrow,
+                      global.replay.v ? Icons.pause : Icons.play_arrow,
                     ),
                   );
                 }),
@@ -133,27 +137,26 @@ class History extends StatelessWidget {
     global.timer.reset();
     global.moves.v = 0;
     global.currentOrder = List.from(global.initShuffle);
+    global.correctOrder = List.from(global.initShuffle);   
     global.restart.rebuildWidget();
     Timer.periodic(const Duration(milliseconds: 10), (timer) {
       String e = olderLog[index];
       String value = e.split(":")[0];
       String to = e.split(":")[1];
-      int cardIndex = global.initShuffle.indexOf(value.i);
       List<String> time = e.split(":")[2].split("|");
 
       int millsec = time[0].i;
       int sec = time[1].i;
       int min = time[2].i;
-      if (olderLog.first == e) move(to, cardIndex);
+      if (olderLog.first == e) move(to, value.i);
 
-      if (millsec + sec + min == global.timer.total &&
-          !(olderLog.first == e)) {
-        move(to, cardIndex);
+      if (millsec + sec + min == global.timer.total && !(olderLog.first == e)) {
+        move(to, value.i);
       }
       if (index == olderLog.length) {
         timer.cancel();
         global.timer.pause();
-        replay.v = false;
+        global.replay.v = false;
       }
     });
   }
@@ -161,20 +164,20 @@ class History extends StatelessWidget {
   void move(String to, int cardIndex) {
     switch (to) {
       case "right":
-        controlle[cardIndex].right();
+        global.controller[cardIndex].right();
         break;
       case "left":
-        controlle[cardIndex].left();
+        global.controller[cardIndex].left();
         break;
       case "up":
-        controlle[cardIndex].up();
+        global.controller[cardIndex].up();
         break;
       case "down":
-        controlle[cardIndex].down();
+        global.controller[cardIndex].down();
         break;
     }
+
     index++;
-    //print(index);
   }
 
   IconData? getIcon(String icon) {

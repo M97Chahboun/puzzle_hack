@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mc/mc.dart';
+import 'package:puzzle_hack/utils/controller.dart';
 import 'package:puzzle_hack/utils/empty.dart';
 import 'package:puzzle_hack/utils/shake_curve.dart';
 import 'package:puzzle_hack/utils/singleton.dart';
@@ -25,12 +27,25 @@ class PuzzleCard extends StatefulWidget {
 class _PuzzleCardState extends State<PuzzleCard> {
   Curve currentCurve = Curves.bounceInOut;
   final List<int> correct = List.generate(16, (index) => index + 1);
+  void addController() {
+    global.controller[widget.value] =
+        (CardControlller(toRight, toLeft, toUp, toDown));
+  }
 
   @override
   void initState() {
-    controlle.add(CardControl(toRight, toLeft, toUp, toDown));
+    global.controller[widget.value] =
+        (CardControlller(toRight, toLeft, toUp, toDown));
+    global.restart.registerListener(miniRebuild, addController);
     super.initState();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   global.controller[widget.value] =
+  //       (CardControlller(toRight, toLeft, toUp, toDown));
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -42,21 +57,25 @@ class _PuzzleCardState extends State<PuzzleCard> {
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
           onHorizontalDragEnd: (details) {
-            if (!global.timer.timer.isActive &&
-                !correct.isSameOrder(global.currentOrder)) {
-              global.timer.startTimer();
-            }
-            if (global.timer.timer.isActive) {
-              horizontalSwipe(details, context);
+            if (!global.replay.v) {
+              if (!global.timer.timer.isActive &&
+                  !correct.isSameOrder(global.currentOrder)) {
+                global.timer.startTimer();
+              }
+              if (global.timer.timer.isActive) {
+                horizontalSwipe(details, context);
+              }
             }
           },
           onVerticalDragEnd: (details) {
-            if (!global.timer.timer.isActive &&
-                !correct.isSameOrder(global.currentOrder)) {
-              global.timer.startTimer();
-            }
-            if (global.timer.timer.isActive) {
-              verticalSwipe(details, context);
+            if (!global.replay.v) {
+              if (!global.timer.timer.isActive &&
+                  !correct.isSameOrder(global.currentOrder)) {
+                global.timer.startTimer();
+              }
+              if (global.timer.timer.isActive) {
+                verticalSwipe(details, context);
+              }
             }
           },
           child: ConstrainedBox(
@@ -70,7 +89,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
               width: context.width * 0.16,
               decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(9.0))),
+                  borderRadius: const BorderRadius.all(Radius.circular(9.0))),
               alignment: Alignment.center,
               child: Text(
                 widget.value.toString(),
@@ -121,7 +140,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
 
   void toDown() {
     widget.y += global.addY;
-    setState(() {});
+    if (mounted) setState(() {});
     setLog("down");
     changeOrder();
     global.empty = global.empty.copyWith(
@@ -132,7 +151,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
 
   void toUp() {
     widget.y -= global.addY;
-    setState(() {});
+    if (mounted) setState(() {});
     setLog("up");
     changeOrder();
     global.empty = global.empty.copyWith(
@@ -143,7 +162,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
 
   void toLeft() {
     widget.x += -global.addX;
-    setState(() {});
+    if (mounted) setState(() {});
     setLog("left");
     changeOrder();
     global.empty = global.empty.copyWith(x: widget.x + global.addX);
@@ -152,7 +171,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
 
   void toRight() {
     widget.x += global.addX;
-    setState(() {});
+    if (mounted) setState(() {});
     setLog("right");
     changeOrder();
     global.empty = global.empty.copyWith(
@@ -164,10 +183,10 @@ class _PuzzleCardState extends State<PuzzleCard> {
   void shakeX() {
     widget.x += 0.01;
     currentCurve = const ShakeCurve();
-    setState(() {});
+    if (mounted) setState(() {});
     Timer.periodic(const Duration(milliseconds: 200), (timer) {
       widget.x -= 0.01;
-      setState(() {});
+      if (mounted) setState(() {});
       currentCurve = Curves.bounceInOut;
       timer.cancel();
     });
@@ -176,20 +195,20 @@ class _PuzzleCardState extends State<PuzzleCard> {
   void shakeY() {
     widget.y += 0.01;
     currentCurve = const ShakeCurve();
-    setState(() {});
+    if (mounted) setState(() {});
     Timer.periodic(const Duration(milliseconds: 200), (timer) {
       widget.y -= 0.01;
-      setState(() {});
+      if (mounted) setState(() {});
       currentCurve = Curves.bounceInOut;
       timer.cancel();
     });
   }
 
   void setLog(String to) {
-    String sec = global.timer.millseconds.two.toString();
-    String min = global.timer.seconds.two.toString();
-    String hr = global.timer.minutes.two.toString();
-    global.log.v.add("${widget.value}:$to:$sec|$min|$hr");
+    String millsec = global.timer.millseconds.two.toString();
+    String sec = global.timer.seconds.two.toString();
+    String min = global.timer.minutes.two.toString();
+    global.log.v.add("${widget.value}:$to:$millsec|$sec|$min");
     global.log.rebuildWidget();
   }
 
@@ -216,14 +235,3 @@ class _PuzzleCardState extends State<PuzzleCard> {
     }
   }
 }
-
-class CardControl {
-  final Function right;
-  final Function left;
-  final Function up;
-  final Function down;
-
-  CardControl(this.right, this.left, this.up, this.down);
-}
-
-List<CardControl> controlle = [];

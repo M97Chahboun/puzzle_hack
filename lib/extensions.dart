@@ -25,10 +25,15 @@ extension ToInt on String {
   int get i => int.parse(this);
 }
 
-extension Global on State{
-  Singleton get global => Singleton();
-}
-extension GlobalLess on StatelessWidget{
+extension Global on State {
   Singleton get global => Singleton();
 }
 
+extension GlobalFul on StatefulWidget {
+  Singleton get global => Singleton();
+}
+
+
+extension GlobalLess on StatelessWidget {
+  Singleton get global => Singleton();
+}

@@ -23,6 +23,11 @@ class MyApp extends StatelessWidget {
                 canvasColor: const Color(0xFF121212),
                 backgroundColor: const Color(0xFF121212),
                 cardColor: const Color(0xFF1E1E1E),
+                iconTheme: const IconThemeData(color: Colors.white),
+              ),
+              theme: ThemeData(
+                backgroundColor: Colors.white,
+                iconTheme: const IconThemeData(color: Colors.blue),
               ),
               home: Home(),
             ));

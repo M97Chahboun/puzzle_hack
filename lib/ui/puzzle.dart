@@ -33,13 +33,9 @@ class Puzzle extends StatelessWidget {
               : null,
           drawer: context.isMobile ? History() : null,
           body: Responsive(
-              mobile: SizedBox(
-                  width: context.width, child: const PuzzleGame()),
+              mobile: SizedBox(width: context.width, child: const PuzzleGame()),
               another: Row(
-                children: [
-                  Flexible(child: History()),
-                  const PuzzleGame()
-                ],
+                children: [Flexible(child: History()), const PuzzleGame()],
               )),
         ));
   }
@@ -49,6 +45,6 @@ class Puzzle extends StatelessWidget {
     global.correctOrder.remove(16);
     global.correctOrder.shuffle();
     global.correctOrder.insert(15, 16);
-    start.value = !start.value;
+    global.restart.v = !global.restart.v;
   }
 }

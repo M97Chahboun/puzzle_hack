@@ -16,9 +16,11 @@ class PuzzleGame extends StatefulWidget {
 class _PuzzleGameState extends State<PuzzleGame> {
   final double col = 4;
   @override
-  void didChangeDependencies() {
-    print(global.currentOrder);
-    super.didChangeDependencies();
+  void initState() {
+    if (global.currentOrder.isNotEmpty) {
+      global.correctOrder = List.from(global.currentOrder);
+    }
+    super.initState();
   }
 
   @override
@@ -89,13 +91,12 @@ class _PuzzleGameState extends State<PuzzleGame> {
                     child: Stack(
                         children: global.correctOrder.map((index) {
                       global.currentOrder.add(index);
-
                       if (x == (global.addX * col) + initX) {
                         x = initX;
                         y += global.addY;
                       }
                       x += global.addY;
-                      if (index != global.correctOrder.last) {
+                      if (index != 16) {
                         return PuzzleCard(x, y, index);
                       } else {
                         global.empty = Empty(
