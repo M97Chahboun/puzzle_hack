@@ -12,6 +12,7 @@ class Singleton {
   List<int> correctOrder = List.generate(16, (index) => index + 1);
   List<int> currentOrder = [];
   List<int> initShuffle = [];
+  String currentTile = "number";
   final McValue<bool> restart = false.mini;
   final McValue<bool> replay = false.mini;
   final PuzzleTimer timer = PuzzleTimer(0);

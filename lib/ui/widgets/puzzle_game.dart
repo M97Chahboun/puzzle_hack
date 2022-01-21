@@ -3,7 +3,9 @@ import 'package:mc/mc.dart';
 import 'package:puzzle_hack/ui/widgets/puzzle_card.dart';
 import 'package:puzzle_hack/extensions.dart';
 import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
+import 'package:puzzle_hack/ui/widgets/tile_image.dart';
 import 'package:puzzle_hack/utils/empty.dart';
+import 'package:puzzle_hack/utils/tile_texture.dart';
 
 class PuzzleGame extends StatefulWidget {
   const PuzzleGame({
@@ -40,6 +42,32 @@ class _PuzzleGameState extends State<PuzzleGame> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(
+                  height: 15.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: const [
+                      TileImage(
+                        color: "blue",
+                      ),
+                      TileImage(
+                        color: "yellow",
+                      ),
+                      TileImage(
+                        color: "green",
+                      ),
+                      TileImage(
+                        color: "number",
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 15.0,
+                ),
                 FittedBox(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

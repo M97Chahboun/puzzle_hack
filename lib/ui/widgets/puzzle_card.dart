@@ -7,6 +7,7 @@ import 'package:puzzle_hack/utils/empty.dart';
 import 'package:puzzle_hack/utils/shake_curve.dart';
 import 'package:puzzle_hack/utils/singleton.dart';
 import 'package:puzzle_hack/extensions.dart';
+import 'package:puzzle_hack/utils/tile_texture.dart';
 
 // ignore: must_be_immutable
 class PuzzleCard extends StatefulWidget {
@@ -93,10 +94,13 @@ class _PuzzleCardState extends State<PuzzleCard> {
                     color: Theme.of(context).canvasColor,
                     borderRadius: const BorderRadius.all(Radius.circular(9.0))),
                 alignment: Alignment.center,
-                child: Text(
-                  widget.value.toString(),
-                  style: Theme.of(context).textTheme.headline5,
-                ),
+                child: global.currentTile == "number"
+                    ? Text(
+                        widget.value.toString(),
+                        style: Theme.of(context).textTheme.headline5,
+                      )
+                    : Image.asset(TileTexture.getTile(
+                        global.currentTile, widget.value.toString())),
               ),
             ),
           ),
