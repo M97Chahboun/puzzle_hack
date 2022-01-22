@@ -20,6 +20,7 @@ class Singleton {
   final double addY = 0.5;
   McValue<List<String>> log = McValue([]);
   McValue<int> moves = 0.mini;
+  McValue<int> tiles = 15.mini;
   List<CardControlller> controller =
       List.generate(16, (index) => CardControlller(() {}, () {}, () {}, () {}));
   McValue<ThemeMode> themeMode = ThemeMode.system.mini;

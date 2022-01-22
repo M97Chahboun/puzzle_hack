@@ -88,10 +88,10 @@ class History extends StatelessWidget {
                                         child: Center(child: Text(value)),
                                       ),
                                       const Text(" to "),
-                                      Icon(
-                                        getIcon(icon),
-                                        color: Theme.of(context).iconTheme.color
-                                      ),
+                                      Icon(getIcon(icon),
+                                          color: Theme.of(context)
+                                              .iconTheme
+                                              .color),
                                       const Text(" in "),
                                       Text(time)
                                     ],
@@ -137,7 +137,7 @@ class History extends StatelessWidget {
     global.timer.reset();
     global.moves.v = 0;
     global.currentOrder = List.from(global.initShuffle);
-    global.correctOrder = List.from(global.initShuffle);   
+    global.correctOrder = List.from(global.initShuffle);
     global.restart.rebuildWidget();
     Timer.periodic(const Duration(milliseconds: 10), (timer) {
       String e = olderLog[index];

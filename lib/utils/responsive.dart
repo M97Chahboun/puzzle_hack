@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_hack/extensions.dart';
+
 class Responsive extends StatelessWidget {
   final Widget mobile;
-  final Widget another;
+  final Widget? tablet;
+  final Widget desktop;
 
   const Responsive({
     Key? key,
     required this.mobile,
-    required this.another,
+    this.tablet,
+    required this.desktop,
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
-    final double width = context.width;
-    if (width >= 850) {
-      return another;
-    } else {
+    final Size _size = MediaQuery.of(context).size;
+    if (_size.width >= 1100) {
+      return desktop;
+    }
+    else if (_size.width >= 850 && tablet != null) {
+      return tablet!;
+    }
+    else {
       return mobile;
     }
   }

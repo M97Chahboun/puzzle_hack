@@ -4,8 +4,11 @@ import 'package:puzzle_hack/ui/widgets/puzzle_card.dart';
 import 'package:puzzle_hack/extensions.dart';
 import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
 import 'package:puzzle_hack/ui/widgets/tile_image.dart';
+import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
 import 'package:puzzle_hack/utils/empty.dart';
-import 'package:puzzle_hack/utils/tile_texture.dart';
+import 'package:puzzle_hack/utils/responsive.dart';
+
+import 'moves.dart';
 
 class PuzzleGame extends StatefulWidget {
   const PuzzleGame({
@@ -20,6 +23,7 @@ class _PuzzleGameState extends State<PuzzleGame> {
   final double col = 4;
   @override
   void initState() {
+   
     if (global.currentOrder.isNotEmpty) {
       global.correctOrder = List.from(global.currentOrder);
     }
@@ -45,71 +49,40 @@ class _PuzzleGameState extends State<PuzzleGame> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      TileImage(
-                        color: "blue",
-                      ),
-                      TileImage(
-                        color: "yellow",
-                      ),
-                      TileImage(
-                        color: "green",
-                      ),
-                      TileImage(
-                        color: "number",
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 15.0,
-                ),
                 FittedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      McMV(
-                          global.moves,
-                          () => Text(global.moves.v.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(fontWeight: FontWeight.bold))),
-                      Text(" Moves |",
+                  child: McMV(global.timer, () {
+                    String millsec = global.timer.millseconds.two.toString();
+                    String sec = global.timer.seconds.two.toString();
+                    String min = global.timer.minutes.two.toString();
+                    return Row(
+                      children: [
+                        const Icon(
+                          Icons.timer,
+                          size: 40.0,
+                        ),
+                        Text(
+                          "$millsec:$sec:$min",
                           style: Theme.of(context)
                               .textTheme
                               .headline4!
-                              .copyWith(fontWeight: FontWeight.bold)),
-                      McMV(global.timer, () {
-                        String millsec =
-                            global.timer.millseconds.two.toString();
-                        String sec = global.timer.seconds.two.toString();
-                        String min = global.timer.minutes.two.toString();
-                        return Row(
-                          children: [
-                            const Icon(
-                              Icons.timer,
-                              size: 40.0,
-                            ),
-                            Text(
-                              "$millsec:$sec:$min",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        );
-                      }),
-                      if (!context.isMobile) const ThemeIcon()
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        if (!context.isMobile) const ThemeIcon(),
+                      ],
+                    );
+                  }),
+                ),
+                if (context.isTablet || context.isMobile) ...[
+                  const SizedBox(height: 15.0),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: const [
+                      Moves(),
+                      TileTheme(),
+                      const SizedBox(height: 15.0),
                     ],
                   ),
-                ),
-                const SizedBox(height: 15.0),
+                ],
                 ConstrainedBox(
                   constraints:
                       const BoxConstraints(maxHeight: 511, maxWidth: 511),
