@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
 import 'package:puzzle_hack/utils/controller.dart';
 import 'package:puzzle_hack/utils/empty.dart';
+import 'package:puzzle_hack/utils/get_correct_tiles.dart';
 import 'package:puzzle_hack/utils/shake_curve.dart';
 import 'package:puzzle_hack/utils/singleton.dart';
 import 'package:puzzle_hack/extensions.dart';
@@ -154,7 +155,9 @@ class _PuzzleCardState extends State<PuzzleCard> {
       y: widget.y - global.addY,
     );
     global.moves.v++;
+    GetCorrectTiles.getCorrectTiles();
   }
+
 
   void toUp() {
     widget.y -= global.addY;
@@ -165,6 +168,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
       y: widget.y + global.addY,
     );
     global.moves.v++;
+    GetCorrectTiles.getCorrectTiles();
   }
 
   void toLeft() {
@@ -174,6 +178,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
     changeOrder();
     global.empty = global.empty.copyWith(x: widget.x + global.addX);
     global.moves.v++;
+    GetCorrectTiles.getCorrectTiles();
   }
 
   void toRight() {
@@ -185,6 +190,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
       x: widget.x - global.addX,
     );
     global.moves.v++;
+    GetCorrectTiles.getCorrectTiles();
   }
 
   void shakeX() {

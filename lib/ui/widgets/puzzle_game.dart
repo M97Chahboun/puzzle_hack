@@ -5,6 +5,7 @@ import 'package:puzzle_hack/extensions.dart';
 import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
 import 'package:puzzle_hack/ui/widgets/tile_image.dart';
 import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
+import 'package:puzzle_hack/ui/widgets/timer_widget.dart';
 import 'package:puzzle_hack/utils/empty.dart';
 import 'package:puzzle_hack/utils/responsive.dart';
 
@@ -23,7 +24,6 @@ class _PuzzleGameState extends State<PuzzleGame> {
   final double col = 4;
   @override
   void initState() {
-   
     if (global.currentOrder.isNotEmpty) {
       global.correctOrder = List.from(global.currentOrder);
     }
@@ -49,28 +49,9 @@ class _PuzzleGameState extends State<PuzzleGame> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                FittedBox(
-                  child: McMV(global.timer, () {
-                    String millsec = global.timer.millseconds.two.toString();
-                    String sec = global.timer.seconds.two.toString();
-                    String min = global.timer.minutes.two.toString();
-                    return Row(
-                      children: [
-                        const Icon(
-                          Icons.timer,
-                          size: 40.0,
-                        ),
-                        Text(
-                          "$millsec:$sec:$min",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        if (!context.isMobile) const ThemeIcon(),
-                      ],
-                    );
-                  }),
+                const TimerWidget(),
+                const SizedBox(
+                  height: 15.0,
                 ),
                 if (context.isTablet || context.isMobile) ...[
                   const SizedBox(height: 15.0),
@@ -79,7 +60,7 @@ class _PuzzleGameState extends State<PuzzleGame> {
                     children: const [
                       Moves(),
                       TileTheme(),
-                      const SizedBox(height: 15.0),
+                      SizedBox(height: 15.0),
                     ],
                   ),
                 ],

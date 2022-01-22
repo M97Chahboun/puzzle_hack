@@ -10,6 +10,7 @@ class TileImage extends StatelessWidget {
     return InkWell(
         onTap: () {
           global.currentTile = color;
+          global.correctOrder = List.from(global.currentOrder);
           global.restart.v = !global.restart.v;
         },
         child: color != "number"

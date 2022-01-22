@@ -9,7 +9,7 @@ class Moves extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return McMV(global.moves, () {
+    return McMV(McValue.merge([global.moves, global.tiles]), () {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -18,12 +18,12 @@ class Moves extends StatelessWidget {
                   .textTheme
                   .headline4!
                   .copyWith(fontWeight: FontWeight.bold)),
-          Text(" Moves |",
+          Text(" Moves | ",
               style: Theme.of(context)
                   .textTheme
                   .headline4!
                   .copyWith(fontWeight: FontWeight.bold)),
-          Text(global.tiles.toString(),
+          Text(global.tiles.v.toString(),
               style: Theme.of(context)
                   .textTheme
                   .headline4!

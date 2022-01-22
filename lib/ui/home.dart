@@ -7,6 +7,7 @@ import 'package:puzzle_hack/ui/widgets/puzzle_game.dart';
 import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
 import 'package:puzzle_hack/ui/widgets/tile_image.dart';
 import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
+import 'package:puzzle_hack/utils/get_correct_tiles.dart';
 import 'package:puzzle_hack/utils/responsive.dart';
 
 class Home extends StatelessWidget {
@@ -114,6 +115,7 @@ class Home extends StatelessWidget {
     global.timer.reset();
     global.timer.pause();
     global.log.v = [];
+    GetCorrectTiles.getCorrectTiles(true);
     global.restart.rebuildWidget();
   }
 }
