@@ -218,9 +218,9 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void setLog(String to) {
-    String millsec = global.timer.millseconds.two.toString();
-    String sec = global.timer.seconds.two.toString();
-    String min = global.timer.minutes.two.toString();
+    String millsec = global.timer.seconds.two.toString();
+    String sec = global.timer.minutes.two.toString();
+    String min = global.timer.hours.two.toString();
     global.log.v.add("${widget.value}:$to:$millsec|$sec|$min");
     global.log.rebuildWidget();
   }

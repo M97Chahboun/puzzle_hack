@@ -90,6 +90,13 @@ class Home extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    Text(
+                      "Puzzle Challenge",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
                     const Moves(),
                     const SizedBox(
                       height: 15.0,

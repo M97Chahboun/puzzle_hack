@@ -145,12 +145,12 @@ class History extends StatelessWidget {
       String to = e.split(":")[1];
       List<String> time = e.split(":")[2].split("|");
 
-      int millsec = time[0].i;
-      int sec = time[1].i;
-      int min = time[2].i;
+      int sec = time[0].i;
+      int min = time[1].i;
+      int hr = time[2].i;
       if (olderLog.first == e) move(to, value.i);
 
-      if (millsec + sec + min == global.timer.total && !(olderLog.first == e)) {
+      if (sec + min + hr == global.timer.total && !(olderLog.first == e)) {
         move(to, value.i);
       }
       if (index == olderLog.length) {

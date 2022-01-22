@@ -10,9 +10,9 @@ class TimerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return FittedBox(
       child: McMV(global.timer, () {
-        String millsec = global.timer.millseconds.two.toString();
         String sec = global.timer.seconds.two.toString();
         String min = global.timer.minutes.two.toString();
+        String hr = global.timer.hours.two.toString();
         return Row(
           children: [
             const Icon(
@@ -20,7 +20,7 @@ class TimerWidget extends StatelessWidget {
               size: 40.0,
             ),
             Text(
-              "$millsec:$sec:$min",
+              "$hr:$min:$sec",
               style: Theme.of(context)
                   .textTheme
                   .headline4!
