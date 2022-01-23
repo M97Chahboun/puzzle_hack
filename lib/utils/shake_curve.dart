@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class ShakeCurve extends Curve {
- const ShakeCurve({this.count = 3});
+  const ShakeCurve({this.count = 3});
   final double count;
 
   @override

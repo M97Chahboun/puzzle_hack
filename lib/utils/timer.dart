@@ -3,27 +3,27 @@ import 'dart:async';
 import 'package:mc/mc.dart';
 
 class PuzzleTimer extends McValue {
+  int millseconds = 0;
   int seconds = 0;
   int minutes = 0;
-  int hours = 0;
-  Timer timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {})
-    ..cancel();
+  Timer timer =
+      Timer.periodic(const Duration(milliseconds: 10), (Timer timer) {})
+        ..cancel();
 
   PuzzleTimer(value) : super(value);
   void startTimer() {
-    const oneSec = Duration(seconds: 1);
-
+    const oneSec = Duration(milliseconds: 10);
     timer = Timer.periodic(oneSec, (Timer timer) {
-      if (seconds < 0) {
+      if (millseconds < 0) {
         timer.cancel();
       } else {
-        seconds = seconds + 1;
-        if (seconds > 59) {
-          minutes += 1;
-          seconds = 0;
-          if (minutes > 59) {
-            hours += 1;
-            minutes = 0;
+        millseconds = millseconds + 1;
+        if (millseconds >= 99) {
+          seconds += 1;
+          millseconds = 0;
+          if (seconds > 59) {
+            minutes += 1;
+            seconds = 0;
           }
         }
       }
@@ -33,13 +33,15 @@ class PuzzleTimer extends McValue {
 
   void reset() {
     //  timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {});
-    hours = 0;
     minutes = 0;
     seconds = 0;
+    millseconds = 0;
     rebuildWidget();
   }
 
-  int get total => seconds + minutes + hours;
+  bool get isStarted => timer.isActive;
+
+  int get total => millseconds + seconds + minutes;
 
   void pause() {
     timer.cancel();

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mc/mc.dart';
-import 'package:puzzle_hack/extensions.dart';
+import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/ui/widgets/history.dart';
 import 'package:puzzle_hack/ui/widgets/moves.dart';
 import 'package:puzzle_hack/ui/widgets/puzzle_game.dart';
 import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
-import 'package:puzzle_hack/ui/widgets/tile_image.dart';
 import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
 import 'package:puzzle_hack/utils/get_correct_tiles.dart';
 import 'package:puzzle_hack/utils/responsive.dart';

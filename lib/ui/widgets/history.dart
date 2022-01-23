@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
-import 'package:puzzle_hack/extensions.dart';
+import 'package:puzzle_hack/utils/extensions.dart';
 
 class History extends StatelessWidget {
   ScrollController _scrollController = ScrollController();
@@ -107,18 +106,20 @@ class History extends StatelessWidget {
             if (showReplayButton)
               Align(
                 alignment: const Alignment(0, 0.9),
-                child: McMV(global.replay, () {
+                child: McMV(McValue.merge([global.replay, global.log]), () {
                   return FloatingActionButton(
                     backgroundColor: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      index = 0;
-                      if (global.replay.v) {
-                        global.replay.v = false;
-                      } else {
-                        replayGame(context);
-                        global.replay.v = true;
-                      }
-                    },
+                    onPressed: global.log.v.isNotEmpty
+                        ? () {
+                            index = 0;
+                            if (global.replay.v) {
+                              global.replay.v = false;
+                            } else {
+                              replayGame(context);
+                              global.replay.v = true;
+                            }
+                          }
+                        : null,
                     child: Icon(
                       global.replay.v ? Icons.pause : Icons.play_arrow,
                     ),
@@ -135,6 +136,7 @@ class History extends StatelessWidget {
     List<String> olderLog = global.log.v;
     global.log.v = [];
     global.timer.reset();
+    if (!global.timer.isStarted) global.timer.startTimer();
     global.moves.v = 0;
     global.currentOrder = List.from(global.initShuffle);
     global.correctOrder = List.from(global.initShuffle);

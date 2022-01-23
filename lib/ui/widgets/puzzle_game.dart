@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
 import 'package:puzzle_hack/ui/widgets/puzzle_card.dart';
-import 'package:puzzle_hack/extensions.dart';
-import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
-import 'package:puzzle_hack/ui/widgets/tile_image.dart';
+import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
 import 'package:puzzle_hack/ui/widgets/timer_widget.dart';
 import 'package:puzzle_hack/utils/empty.dart';
-import 'package:puzzle_hack/utils/responsive.dart';
-
 import 'moves.dart';
 
 class PuzzleGame extends StatefulWidget {

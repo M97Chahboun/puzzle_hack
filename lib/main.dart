@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
-import 'package:puzzle_hack/extensions.dart';
+import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/ui/home.dart';
+import 'package:puzzle_hack/utils/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,17 +19,8 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               themeMode: global.themeMode.v,
-              darkTheme: ThemeData(
-                brightness: Brightness.dark,
-                canvasColor: const Color(0xFF121212),
-                backgroundColor: const Color(0xFF121212),
-                cardColor: const Color(0xFF1E1E1E),
-                iconTheme: const IconThemeData(color: Colors.white),
-              ),
-              theme: ThemeData(
-                backgroundColor: Colors.white,
-                iconTheme: const IconThemeData(color: Colors.blue),
-              ),
+              darkTheme: darkTheme,
+              theme: lightTheme,
               home: Home(),
             ));
   }

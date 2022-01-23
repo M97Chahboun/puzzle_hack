@@ -6,8 +6,9 @@ import 'package:puzzle_hack/utils/controller.dart';
 import 'package:puzzle_hack/utils/empty.dart';
 import 'package:puzzle_hack/utils/get_correct_tiles.dart';
 import 'package:puzzle_hack/utils/shake_curve.dart';
+import 'package:puzzle_hack/utils/show_score.dart';
 import 'package:puzzle_hack/utils/singleton.dart';
-import 'package:puzzle_hack/extensions.dart';
+import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/utils/tile_texture.dart';
 
 // ignore: must_be_immutable
@@ -158,7 +159,6 @@ class _PuzzleCardState extends State<PuzzleCard> {
     GetCorrectTiles.getCorrectTiles();
   }
 
-
   void toUp() {
     widget.y -= global.addY;
     if (mounted) setState(() {});
@@ -218,10 +218,10 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void setLog(String to) {
-    String millsec = global.timer.seconds.two.toString();
-    String sec = global.timer.minutes.two.toString();
-    String min = global.timer.hours.two.toString();
-    global.log.v.add("${widget.value}:$to:$millsec|$sec|$min");
+    String millsec = global.timer.millseconds.two.toString();
+    String sec = global.timer.seconds.two.toString();
+    String min = global.timer.minutes.two.toString();
+    global.log.v.add("${widget.value}:$to:$sec|$min|$millsec");
     global.log.rebuildWidget();
   }
 
@@ -233,18 +233,16 @@ class _PuzzleCardState extends State<PuzzleCard> {
       ..insert(indexValue, global.empty.value);
     global.currentOrder
       ..remove(widget.value)
-      ..insert(indexEmpty, widget.value);
+      ..insert(indexEmpty, widget.value);   
     if (Singleton().currentOrder.isSameOrder(correct) &&
         global.timer.timer.isActive) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          global.timer.pause();
-          return AlertDialog(
-            content: Text("Good job"),
-          );
-        },
-      );
+      showAppDialog(
+          child: Container(
+            height: context.height * 0.2,
+            width: context.width * 0.6,
+            color: Colors.blue,
+          ),
+          context: context);
     }
   }
 }

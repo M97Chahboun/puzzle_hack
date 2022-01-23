@@ -1,8 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
-import 'package:puzzle_hack/extensions.dart';
+import 'package:puzzle_hack/utils/extensions.dart';
 
 class ThemeIcon extends StatelessWidget {
   const ThemeIcon({Key? key}) : super(key: key);
