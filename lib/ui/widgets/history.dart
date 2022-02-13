@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:mc/mc.dart';
+import 'package:mc/mc.dart' show McMV, McValue, miniRebuild;
 import 'package:puzzle_hack/utils/extensions.dart';
 
 class History extends StatelessWidget {

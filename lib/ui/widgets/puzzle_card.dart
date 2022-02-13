@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mc/mc.dart';
+import 'package:mc/mc.dart' show miniRebuild;
 import 'package:puzzle_hack/utils/controller.dart';
 import 'package:puzzle_hack/utils/empty.dart';
 import 'package:puzzle_hack/utils/get_correct_tiles.dart';
@@ -233,7 +233,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
       ..insert(indexValue, global.empty.value);
     global.currentOrder
       ..remove(widget.value)
-      ..insert(indexEmpty, widget.value);   
+      ..insert(indexEmpty, widget.value);
     if (Singleton().currentOrder.isSameOrder(correct) &&
         global.timer.timer.isActive) {
       showAppDialog(

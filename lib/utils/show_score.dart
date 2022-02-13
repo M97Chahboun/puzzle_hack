@@ -57,4 +57,3 @@ class AppDialog extends StatelessWidget {
     );
   }
 }
-
