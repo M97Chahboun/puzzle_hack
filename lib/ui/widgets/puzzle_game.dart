@@ -75,6 +75,7 @@ class _PuzzleGameState extends State<PuzzleGame> {
                           y += global.addY;
                         }
                         x += global.addY;
+
                         if (index != 16) {
                           return AwesomeScale(
                               key: Key(global.currentOrder.toString()),
@@ -85,7 +86,7 @@ class _PuzzleGameState extends State<PuzzleGame> {
                             x: x,
                             y: y,
                           );
-                          return SizedBox();
+                          return const SizedBox();
                         }
                       }).toList()),
                     ),

@@ -23,25 +23,29 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
   }
 
   void _handleKeyEvent(RawKeyEvent event) {
-    // List list = [2,3,6,7,10,11,14,15];
-    // int xEmpty = global.currentOrder.indexOf(16);
-    // int yEmpty = global.currentOrder.indexOf(16) + 3;
     if (event is RawKeyDownEvent) {
-      print(global.currentOrder);
-      int right = global.currentOrder.indexOf(16);
-      int down = global.currentOrder.indexOf(16) - 3;
+      int right = global.currentOrder.indexOf(16) - 1;
+      int down = global.currentOrder.indexOf(16) - 4;
       int left = global.currentOrder.indexOf(16) + 1;
       int up = global.currentOrder.indexOf(16) + 4;
 
       final physicalKey = event.data.physicalKey;
       if (physicalKey == PhysicalKeyboardKey.arrowDown) {
-        if (!down.isNegative && 16 > down) global.controller[down].down();
+        if (!down.isNegative && 16 > down) {
+          global.controller[global.currentOrder[down]].down();
+        }
       } else if (physicalKey == PhysicalKeyboardKey.arrowUp) {
-        if (!up.isNegative && 16 > up) global.controller[up].up();
+        if (!up.isNegative && 16 > up) {
+          global.controller[global.currentOrder[up]].up();
+        }
       } else if (physicalKey == PhysicalKeyboardKey.arrowRight) {
-        if (!right.isNegative && 16 > right) global.controller[right].right();
+        if (!right.isNegative && 16 > right) {
+          global.controller[global.currentOrder[right]].right();
+        }
       } else if (physicalKey == PhysicalKeyboardKey.arrowLeft) {
-        if (!left.isNegative && 16 > left) global.controller[left].left();
+        if (!left.isNegative && 16 > left) {
+          global.controller[global.currentOrder[left]].left();
+        }
       }
     }
   }

@@ -132,7 +132,8 @@ class _PuzzleCardState extends State<PuzzleCard> {
   void horizontalSwipe(DragEndDetails details, BuildContext context) {
     if (details.velocity.pixelsPerSecond.dx >
         details.velocity.pixelsPerSecond.dy) {
-      if (Empty(y: widget.y, x: widget.x + global.addX) == global.empty) {
+      if (Empty(y: widget.y, x: widget.x + global.addX) == global.empty &&
+          widget.x >= -0.75) {
         toRight();
       } else {
         shakeX();
@@ -172,25 +173,29 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void toLeft() {
-    widget.x += -global.addX;
-    if (mounted) setState(() {});
-    setLog("left");
-    changeOrder();
-    global.empty = global.empty.copyWith(x: widget.x + global.addX);
-    global.moves.v++;
-    GetCorrectTiles.getCorrectTiles();
+    if (widget.x > -0.75) {
+      widget.x += -global.addX;
+      if (mounted) setState(() {});
+      setLog("left");
+      changeOrder();
+      global.empty = global.empty.copyWith(x: widget.x + global.addX);
+      global.moves.v++;
+      GetCorrectTiles.getCorrectTiles();
+    }
   }
 
   void toRight() {
-    widget.x += global.addX;
-    if (mounted) setState(() {});
-    setLog("right");
-    changeOrder();
-    global.empty = global.empty.copyWith(
-      x: widget.x - global.addX,
-    );
-    global.moves.v++;
-    GetCorrectTiles.getCorrectTiles();
+    if (widget.x < 0.75) {
+      widget.x += global.addX;
+      if (mounted) setState(() {});
+      setLog("right");
+      changeOrder();
+      global.empty = global.empty.copyWith(
+        x: widget.x - global.addX,
+      );
+      global.moves.v++;
+      GetCorrectTiles.getCorrectTiles();
+    }
   }
 
   void shakeX() {

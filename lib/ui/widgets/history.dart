@@ -5,7 +5,7 @@ import 'package:mc/mc.dart' show McMV, McValue, miniRebuild;
 import 'package:puzzle_hack/utils/extensions.dart';
 
 class History extends StatelessWidget {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   int index = 0;
   final bool showReplayButton;
   double? max;
