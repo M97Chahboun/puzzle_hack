@@ -93,16 +93,18 @@ class _PuzzleCardState extends State<PuzzleCard> {
                 height: context.width * 0.16,
                 width: context.width * 0.16,
                 decoration: BoxDecoration(
+                    image: global.currentTile != "number"
+                        ? DecorationImage(
+                            image: AssetImage(TileTexture.getTile(
+                                global.currentTile, widget.value.toString())))
+                        : null,
                     color: Theme.of(context).canvasColor,
                     borderRadius: const BorderRadius.all(Radius.circular(9.0))),
                 alignment: Alignment.center,
-                child: global.currentTile == "number"
-                    ? Text(
-                        widget.value.toString(),
-                        style: Theme.of(context).textTheme.headline5,
-                      )
-                    : Image.asset(TileTexture.getTile(
-                        global.currentTile, widget.value.toString())),
+                child: Text(
+                  widget.value.toString(),
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ),
             ),
           ),

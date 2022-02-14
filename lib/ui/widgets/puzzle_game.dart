@@ -77,10 +77,10 @@ class _PuzzleGameState extends State<PuzzleGame> {
                         x += global.addY;
 
                         if (index != 16) {
-                          return AwesomeScale(
-                              key: Key(global.currentOrder.toString()),
-                              child: PuzzleCard(x, y, index),
-                              millseconds: 100 * index);
+                          return PuzzleCard(x, y, index).animated(100 * index,
+                              key: Key(
+                                global.currentOrder.toString(),
+                              ));
                         } else {
                           global.empty = Empty(
                             x: x,
@@ -101,24 +101,5 @@ class _PuzzleGameState extends State<PuzzleGame> {
   }
 }
 
-class AwesomeScale extends StatelessWidget {
-  const AwesomeScale({Key? key, required this.child, this.millseconds = 1000})
-      : super(key: key);
-  final Widget child;
-  final int millseconds;
-  @override
-  Widget build(BuildContext context) {
-    return TweenAnimationBuilder(
-      tween: Tween(begin: 0.0, end: 1.0),
-      child: child,
-      curve: Curves.elasticOut,
-      duration: Duration(milliseconds: millseconds),
-      builder: (BuildContext context, double value, Widget? child) {
-        return Transform.scale(
-          scale: value,
-          child: child,
-        );
-      },
-    );
-  }
-}
+
+

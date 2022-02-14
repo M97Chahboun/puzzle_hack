@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:puzzle_hack/utils/awesome_animation.dart';
 import 'package:puzzle_hack/utils/singleton.dart';
 
 extension ToScreenSize on BuildContext {
@@ -42,4 +43,11 @@ extension GlobalFul on StatefulWidget {
 
 extension GlobalLess on StatelessWidget {
   Singleton get global => Singleton();
+}
+
+
+extension Anim on Widget {
+  Widget animated(int duration, {Key? key}) {
+    return AwesomeScale(key: key, child: this, millseconds: duration);
+  }
 }
