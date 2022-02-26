@@ -45,7 +45,6 @@ extension GlobalLess on StatelessWidget {
   Singleton get global => Singleton();
 }
 
-
 extension Anim on Widget {
   Widget animated(int duration, {Key? key}) {
     return AwesomeScale(key: key, child: this, millseconds: duration);

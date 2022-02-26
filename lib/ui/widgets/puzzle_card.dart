@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mc/mc.dart' show miniRebuild;
 import 'package:puzzle_hack/utils/controller.dart';
 import 'package:puzzle_hack/utils/empty.dart';
 import 'package:puzzle_hack/utils/get_correct_tiles.dart';
@@ -30,16 +29,14 @@ class PuzzleCard extends StatefulWidget {
 class _PuzzleCardState extends State<PuzzleCard> {
   Curve currentCurve = Curves.bounceInOut;
   final List<int> correct = List.generate(16, (index) => index + 1);
-  void addController() {
+  void _addController() {
     global.controller[widget.value] =
         (CardControlller(toRight, toLeft, toUp, toDown));
   }
 
   @override
   void initState() {
-    global.controller[widget.value] =
-        (CardControlller(toRight, toLeft, toUp, toDown));
-    global.restart.registerListener(miniRebuild, addController);
+    _addController();
     super.initState();
   }
 
@@ -156,16 +153,16 @@ class _PuzzleCardState extends State<PuzzleCard> {
           !correct.isSameOrder(global.currentOrder)) {
         global.timer.startTimer();
       }
-      widget.y += global.addY;
-      if (mounted) setState(() {});
-      setLog("down");
-      changeOrder();
-      global.empty = global.empty.copyWith(
-        y: widget.y - global.addY,
-      );
-      global.moves.v++;
-      GetCorrectTiles.getCorrectTiles();
     }
+    widget.y += global.addY;
+    if (mounted) setState(() {});
+    setLog("down");
+    changeOrder();
+    global.empty = global.empty.copyWith(
+      y: widget.y - global.addY,
+    );
+    global.moves.v++;
+    GetCorrectTiles.getCorrectTiles();
   }
 
   void toUp() {
@@ -174,16 +171,16 @@ class _PuzzleCardState extends State<PuzzleCard> {
           !correct.isSameOrder(global.currentOrder)) {
         global.timer.startTimer();
       }
-      widget.y -= global.addY;
-      if (mounted) setState(() {});
-      setLog("up");
-      changeOrder();
-      global.empty = global.empty.copyWith(
-        y: widget.y + global.addY,
-      );
-      global.moves.v++;
-      GetCorrectTiles.getCorrectTiles();
     }
+    widget.y -= global.addY;
+    if (mounted) setState(() {});
+    setLog("up");
+    changeOrder();
+    global.empty = global.empty.copyWith(
+      y: widget.y + global.addY,
+    );
+    global.moves.v++;
+    GetCorrectTiles.getCorrectTiles();
   }
 
   void toLeft() {
@@ -192,15 +189,15 @@ class _PuzzleCardState extends State<PuzzleCard> {
           !correct.isSameOrder(global.currentOrder)) {
         global.timer.startTimer();
       }
-      if (widget.x > -0.75) {
-        widget.x += -global.addX;
-        if (mounted) setState(() {});
-        setLog("left");
-        changeOrder();
-        global.empty = global.empty.copyWith(x: widget.x + global.addX);
-        global.moves.v++;
-        GetCorrectTiles.getCorrectTiles();
-      }
+    }
+    if (widget.x > -0.75) {
+      widget.x += -global.addX;
+      if (mounted) setState(() {});
+      setLog("left");
+      changeOrder();
+      global.empty = global.empty.copyWith(x: widget.x + global.addX);
+      global.moves.v++;
+      GetCorrectTiles.getCorrectTiles();
     }
   }
 
@@ -210,17 +207,17 @@ class _PuzzleCardState extends State<PuzzleCard> {
           !correct.isSameOrder(global.currentOrder)) {
         global.timer.startTimer();
       }
-      if (widget.x < 0.75) {
-        widget.x += global.addX;
-        if (mounted) setState(() {});
-        setLog("right");
-        changeOrder();
-        global.empty = global.empty.copyWith(
-          x: widget.x - global.addX,
-        );
-        global.moves.v++;
-        GetCorrectTiles.getCorrectTiles();
-      }
+    }
+    if (widget.x < 0.75) {
+      widget.x += global.addX;
+      if (mounted) setState(() {});
+      setLog("right");
+      changeOrder();
+      global.empty = global.empty.copyWith(
+        x: widget.x - global.addX,
+      );
+      global.moves.v++;
+      GetCorrectTiles.getCorrectTiles();
     }
   }
 

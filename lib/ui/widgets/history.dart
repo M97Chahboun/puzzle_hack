@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart' show McMV, McValue, miniRebuild;
 import 'package:puzzle_hack/utils/extensions.dart';
-import 'package:puzzle_hack/utils/request.dart';
 
+// ignore: must_be_immutable
 class History extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
   int index = 0;
@@ -182,12 +181,6 @@ class History extends StatelessWidget {
     }
 
     index++;
-  }
-
-  Future<void> shareLog() async {
-    Map log = {"init_shuffle": global.initShuffle, "logs": global.log};
-    String logString = json.encode(log);
-    String link = await RequestPastbin.postLog(logString);
   }
 
   IconData? getIcon(String icon) {

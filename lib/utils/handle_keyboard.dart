@@ -15,7 +15,7 @@ class PuzzleKeyboardHandler extends StatefulWidget {
 class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
   // The node used to request the keyboard focus.
   final FocusNode _focusNode = FocusNode();
- final List<int> correct = List.generate(16, (index) => index + 1);
+  final List<int> correct = List.generate(16, (index) => index + 1);
   @override
   void dispose() {
     _focusNode.dispose();
@@ -23,7 +23,6 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
   }
 
   void _handleKeyEvent(RawKeyEvent event) {
-     
     if (!correct.isSameOrder(global.currentOrder)) {
       if (event is RawKeyDownEvent) {
         int right = global.currentOrder.indexOf(16) - 1;
