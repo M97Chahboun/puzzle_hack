@@ -151,52 +151,76 @@ class _PuzzleCardState extends State<PuzzleCard> {
   }
 
   void toDown() {
-    widget.y += global.addY;
-    if (mounted) setState(() {});
-    setLog("down");
-    changeOrder();
-    global.empty = global.empty.copyWith(
-      y: widget.y - global.addY,
-    );
-    global.moves.v++;
-    GetCorrectTiles.getCorrectTiles();
-  }
-
-  void toUp() {
-    widget.y -= global.addY;
-    if (mounted) setState(() {});
-    setLog("up");
-    changeOrder();
-    global.empty = global.empty.copyWith(
-      y: widget.y + global.addY,
-    );
-    global.moves.v++;
-    GetCorrectTiles.getCorrectTiles();
-  }
-
-  void toLeft() {
-    if (widget.x > -0.75) {
-      widget.x += -global.addX;
+    if (!global.replay.v) {
+      if (!global.timer.timer.isActive &&
+          !correct.isSameOrder(global.currentOrder)) {
+        global.timer.startTimer();
+      }
+      widget.y += global.addY;
       if (mounted) setState(() {});
-      setLog("left");
+      setLog("down");
       changeOrder();
-      global.empty = global.empty.copyWith(x: widget.x + global.addX);
+      global.empty = global.empty.copyWith(
+        y: widget.y - global.addY,
+      );
       global.moves.v++;
       GetCorrectTiles.getCorrectTiles();
     }
   }
 
-  void toRight() {
-    if (widget.x < 0.75) {
-      widget.x += global.addX;
+  void toUp() {
+    if (!global.replay.v) {
+      if (!global.timer.timer.isActive &&
+          !correct.isSameOrder(global.currentOrder)) {
+        global.timer.startTimer();
+      }
+      widget.y -= global.addY;
       if (mounted) setState(() {});
-      setLog("right");
+      setLog("up");
       changeOrder();
       global.empty = global.empty.copyWith(
-        x: widget.x - global.addX,
+        y: widget.y + global.addY,
       );
       global.moves.v++;
       GetCorrectTiles.getCorrectTiles();
+    }
+  }
+
+  void toLeft() {
+    if (!global.replay.v) {
+      if (!global.timer.timer.isActive &&
+          !correct.isSameOrder(global.currentOrder)) {
+        global.timer.startTimer();
+      }
+      if (widget.x > -0.75) {
+        widget.x += -global.addX;
+        if (mounted) setState(() {});
+        setLog("left");
+        changeOrder();
+        global.empty = global.empty.copyWith(x: widget.x + global.addX);
+        global.moves.v++;
+        GetCorrectTiles.getCorrectTiles();
+      }
+    }
+  }
+
+  void toRight() {
+    if (!global.replay.v) {
+      if (!global.timer.timer.isActive &&
+          !correct.isSameOrder(global.currentOrder)) {
+        global.timer.startTimer();
+      }
+      if (widget.x < 0.75) {
+        widget.x += global.addX;
+        if (mounted) setState(() {});
+        setLog("right");
+        changeOrder();
+        global.empty = global.empty.copyWith(
+          x: widget.x - global.addX,
+        );
+        global.moves.v++;
+        GetCorrectTiles.getCorrectTiles();
+      }
     }
   }
 
