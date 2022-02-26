@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     scaffoldKey.currentState!.openDrawer();
                   },
-                  icon: const Icon(Icons.menu)),
+                  icon: const Icon(Icons.history)),
             )
           : null,
       drawer: context.isMobile

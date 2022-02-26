@@ -126,7 +126,16 @@ class History extends StatelessWidget {
                     ),
                   );
                 }),
-              )
+              ),
+            if (context.isMobile && showReplayButton)
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                    icon:const Icon(Icons.close),
+                    onPressed: () {                      
+                      Navigator.of(context).pop();
+                    }),
+              ),
           ],
         ),
       ),
