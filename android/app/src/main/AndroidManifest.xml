@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.puzzle_hack">
+    package="com.puzzle.hack.app">
    <application
         android:label="puzzle_hack"
         android:icon="@mipmap/ic_launcher">

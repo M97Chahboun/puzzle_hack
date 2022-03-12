@@ -1,4 +1,4 @@
-package com.example.puzzle_hack
+package com.puzzle.hack.app
 
 import io.flutter.embedding.android.FlutterActivity
 

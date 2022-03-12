@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart' show McMV;
 import 'package:puzzle_hack/ui/widgets/puzzle_card.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
 import 'package:puzzle_hack/ui/widgets/timer_widget.dart';
 import 'package:puzzle_hack/utils/empty.dart';
+import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/utils/handle_keyboard.dart';
+
 import 'moves.dart';
 
 class PuzzleGame extends StatefulWidget {
@@ -38,7 +39,7 @@ class _PuzzleGameState extends State<PuzzleGame> {
         double x = initX;
         double y = initY;
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(context.isMobile ? 0.0 : 8.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

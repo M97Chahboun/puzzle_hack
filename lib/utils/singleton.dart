@@ -15,6 +15,7 @@ class Singleton {
   String currentTile = "number";
   final McValue<bool> restart = false.mini;
   final McValue<bool> replay = false.mini;
+  final McValue<bool> upload = false.mini;
   final PuzzleTimer timer = PuzzleTimer(0);
   final double addX = 0.5;
   final double addY = 0.5;
