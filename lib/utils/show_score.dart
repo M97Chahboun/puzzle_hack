@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:puzzle_hack/utils/extensions.dart';
 
@@ -50,10 +52,54 @@ class AppDialog extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(200.0),
         child: Container(
-            width: context.width * 0.81,
-            height: context.height * 0.3,
-            color: Colors.yellow),
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(flex: 2, child: Image.asset("assets/images/dash.png")),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PopUpButton(title: "Share", onTap: () {}),
+                  const SizedBox(
+                    width: 15.0,
+                  ),
+                  PopUpButton(title: "Exit", onTap: context.pop)
+                ],
+              )
+            ],
+          ),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+          ),
+          width: context.width * 0.81,
+          height: context.height * 0.3,
+        ),
       ),
     );
+  }
+}
+
+class PopUpButton extends StatelessWidget {
+  const PopUpButton({Key? key, required this.title, required this.onTap})
+      : super(key: key);
+  final String title;
+  final Function() onTap;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+            elevation: MaterialStateProperty.all(.5),
+            shadowColor: MaterialStateProperty.all(Colors.black),
+            backgroundColor:
+                MaterialStateProperty.all(Theme.of(context).primaryColor)),
+        child: Text(
+          title,
+          style: Theme.of(context)
+              .textTheme
+              .headline6!
+              .copyWith(color: Theme.of(context).backgroundColor),
+        ));
   }
 }

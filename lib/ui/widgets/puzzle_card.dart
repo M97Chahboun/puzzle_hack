@@ -264,6 +264,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
       ..insert(indexEmpty, widget.value);
     if (Singleton().currentOrder.isSameOrder(correct) &&
         global.timer.timer.isActive) {
+      global.timer.pause();
       showAppDialog(
           child: Container(
             height: context.height * 0.2,

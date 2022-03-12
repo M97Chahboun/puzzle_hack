@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:puzzle_hack/utils/awesome_animation.dart';
 import 'package:puzzle_hack/utils/singleton.dart';
 
-extension ToScreenSize on BuildContext {
+extension BuildContextExtensions on BuildContext {
   double get height => MediaQuery.of(this).size.height;
   double get width => MediaQuery.of(this).size.width;
 
@@ -13,6 +13,7 @@ extension ToScreenSize on BuildContext {
       MediaQuery.of(this).size.width >= 850;
 
   bool get isDesktop => MediaQuery.of(this).size.width >= 1100;
+  Function() get pop => Navigator.of(this).pop;
 }
 
 extension SameOrder on List {

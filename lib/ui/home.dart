@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/ui/widgets/history.dart';
 import 'package:puzzle_hack/ui/widgets/moves.dart';
 import 'package:puzzle_hack/ui/widgets/puzzle_game.dart';
 import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
 import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
+import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/utils/get_correct_tiles.dart';
 import 'package:puzzle_hack/utils/responsive.dart';
 
@@ -113,8 +113,25 @@ class Home extends StatelessWidget {
   void shuffle(BuildContext context) {
     global.currentOrder.clear();
     global.correctOrder.remove(16);
-    global.correctOrder.shuffle();
-    global.correctOrder.insert(15, 16);
+    //global.correctOrder.shuffle();
+    global.correctOrder = [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      16,
+      15
+    ];
     global.initShuffle = global.correctOrder;
     global.moves.v = 0;
     global.timer.reset();

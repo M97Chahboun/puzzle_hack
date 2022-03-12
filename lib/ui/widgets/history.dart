@@ -131,8 +131,8 @@ class History extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
-                    icon:const Icon(Icons.close),
-                    onPressed: () {                      
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
                       Navigator.of(context).pop();
                     }),
               ),
