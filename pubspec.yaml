@@ -40,6 +40,7 @@ dependencies:
       ref: mini_mc
   firebase_core: ^1.13.1
   cloud_firestore: ^3.1.10
+  share_plus: ^3.1.0
 
 
 dev_dependencies:

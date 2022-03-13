@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:puzzle_hack/services/firebase_helper.dart';
 import 'package:puzzle_hack/utils/extensions.dart';
+import 'package:share_plus/share_plus.dart';
 
 Future<T?> showAppDialog<T>({
   required BuildContext context,
@@ -32,8 +33,7 @@ Future<T?> showAppDialog<T>({
           const AppDialog(),
     );
 
-class AppDialog extends StatelessWidget {
-  /// {@macro app_dialog}
+class AppDialog extends StatelessWidget {  
   const AppDialog({
     Key? key,
   }) : super(key: key);
@@ -62,8 +62,8 @@ class AppDialog extends StatelessWidget {
                     PopUpButton(
                         title: "Share",
                         onTap: () {
-                          FirebaseHelper.sharePuzzle()
-                              .then((value) => print(value));
+                          FirebaseHelper.sharePuzzle().then((value) =>
+                              Share.share("My log key => ${value.id}"));
                         }),
                     const SizedBox(
                       width: 15.0,

@@ -39,7 +39,7 @@ class _PuzzleGameState extends State<PuzzleGame> {
         double x = initX;
         double y = initY;
         return Padding(
-          padding: EdgeInsets.all(context.isMobile ? 0.0 : 8.0),
+          padding: EdgeInsets.all(context.isMobile ? 15.0 : 8.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,7 +61,7 @@ class _PuzzleGameState extends State<PuzzleGame> {
                         const BoxConstraints(maxHeight: 511, maxWidth: 511),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          //color: Theme.of(context).primaryColor,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(18.0)),
                           border: Border.all(

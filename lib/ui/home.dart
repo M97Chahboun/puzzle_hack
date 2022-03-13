@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mc/mc.dart' show McMV, McValue, mergesRebuild;
+import 'package:mc/mc.dart' show McController, McMV, McValue, mergesRebuild;
+import 'package:puzzle_hack/platforms/desktop.dart';
+import 'package:puzzle_hack/platforms/mobile.dart';
+import 'package:puzzle_hack/platforms/tablet.dart';
 import 'package:puzzle_hack/ui/widgets/history.dart';
-import 'package:puzzle_hack/ui/widgets/moves.dart';
-import 'package:puzzle_hack/ui/widgets/puzzle_game.dart';
 import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
-import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
 import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/utils/get_correct_tiles.dart';
 import 'package:puzzle_hack/utils/responsive.dart';
@@ -34,44 +34,7 @@ class Home extends StatelessWidget {
                 ? FloatingActionButton(
                     backgroundColor: Theme.of(context).primaryColor,
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            content: TextField(
-                              autofocus: true,
-                              controller: keyController,
-                            ),
-                            actions: [
-                              TextButton(
-                                  onPressed: () {
-                                    if (keyController.text.isNotEmpty) {
-                                      try {
-                                        FirebaseFirestore.instance
-                                            .collection('puzzles')
-                                            .doc(keyController.text)
-                                            .get()
-                                            .then((value) {
-                                          global.correctOrder = List<int>.from(
-                                              value.data()!["init"]);
-                                          global.currentOrder = List<int>.from(
-                                              value.data()!["init"]);
-
-                                          global.log.v = List<String>.from(
-                                              value.data()!["log"]);
-                                          global.upload.v = true;
-                                          global.restart.rebuildWidget();
-                                        }).whenComplete(() => context.pop());
-                                      } catch (e) {
-                                        print(e);
-                                      }
-                                    }
-                                  },
-                                  child: const Text("valid"))
-                            ],
-                          );
-                        },
-                      );
+                      uploadLog(context);
                     },
                     child: const Icon(
                       Icons.upload,
@@ -116,75 +79,70 @@ class Home extends StatelessWidget {
               showLast: false,
             )
           : null,
-      body: Responsive(
-          mobile: SizedBox(
-              width: context.width,
-              height: context.height,
-              child: context.height >= 770
-                  ? Wrap(
-                      runAlignment: WrapAlignment.spaceBetween,
-                      alignment: WrapAlignment.center,
-                      children: [
-                        const PuzzleGame(),
-                        Column(
-                          children: [
-                            History(
-                              max: 120,
-                            ),
-                            Container(
-                              height: 20,
-                              width: context.width,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                    Theme.of(context).backgroundColor,
-                                    Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.5)
-                                  ])),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  : const PuzzleGame()),
-          tablet: Row(
-            children: [
-              Expanded(flex: 1, child: History()),
-              const PuzzleGame(),
-            ],
-          ),
-          desktop: Row(
-            children: [
-              Expanded(flex: 1, child: History()),
-              const PuzzleGame(),
-              Expanded(
-                flex: 1,
+      body: const Responsive(
+          mobile: Mobile(), tablet: Tablet(), desktop: Desktop()),
+    );
+  }
+
+  Future<dynamic> uploadLog(BuildContext context) {
+    global.takeFocus.v = false;
+    FocusNode keyNode =
+        McController().add("keyFocus", FocusNode(), readOnly: true);
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: IntrinsicHeight(
+            child: IntrinsicWidth(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      "Puzzle Challenge",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(fontWeight: FontWeight.bold),
+                    TextField(
+                      autofocus: true,
+                      focusNode: keyNode,
+                      decoration: const InputDecoration(
+                          hintText: "write log key",
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)))),
+                      controller: keyController,
                     ),
-                    const Moves(),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    const TileTheme(),
-                    Expanded(
-                        flex: 1, child: Image.asset("assets/images/dash.png")),
+                    TextButton(
+                        onPressed: () {
+                          if (keyController.text.isNotEmpty) {
+                            print(keyController.text);
+                            try {
+                              FirebaseFirestore.instance
+                                  .collection('puzzles')
+                                  .doc(keyController.text.trim())
+                                  .get()
+                                  .then((value) {
+                                print(value.id);
+                                global.correctOrder =
+                                    List<int>.from(value.data()!["init"]);
+                                global.currentOrder =
+                                    List<int>.from(value.data()!["init"]);
+
+                                global.log.v =
+                                    List<String>.from(value.data()!["log"]);
+                                global.upload.v = true;
+                                global.restart.rebuildWidget();
+                              }).whenComplete(() => context.pop());
+                            } catch (e) {
+                              print(e);
+                            }
+                          }
+                        },
+                        child: const Text("valid"))
                   ],
                 ),
               ),
-            ],
-          )),
-    );
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() => global.takeFocus.v = true);
   }
 
   void shuffle(BuildContext context) {
@@ -215,6 +173,7 @@ class Home extends StatelessWidget {
     global.timer.pause();
     global.log.v = [];
     GetCorrectTiles.getCorrectTiles(true);
+    global.upload.v = false;
     global.restart.rebuildWidget();
   }
 

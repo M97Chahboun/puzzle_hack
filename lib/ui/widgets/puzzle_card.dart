@@ -95,7 +95,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
                             image: AssetImage(TileTexture.getTile(
                                 global.currentTile, widget.value.toString())))
                         : null,
-                    color: Theme.of(context).canvasColor,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: const BorderRadius.all(Radius.circular(9.0))),
                 alignment: Alignment.center,
                 child: Text(

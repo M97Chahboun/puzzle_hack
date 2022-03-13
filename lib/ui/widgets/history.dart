@@ -100,7 +100,7 @@ class History extends StatelessWidget {
                         );
                       },
                     )),
-            if (context.isMobile)
+            if (context.isMobile && !showLast)
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(

@@ -56,21 +56,19 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
 
   @override
   Widget build(BuildContext context) {
-    return McMV(global.replay, () {
-      return global.replay.v
-          ? RawKeyboardListener(
-              focusNode: _focusNode,
-              onKey: _handleKeyEvent,
-              child: Builder(
-                builder: (context) {
-                  if (!_focusNode.hasFocus) {
-                    FocusScope.of(context).requestFocus(_focusNode);
-                  }
-                  return widget.child;
-                },
-              ),
-            )
-          : widget.child;
+    return McMV(global.takeFocus, () {
+      return RawKeyboardListener(
+        focusNode: _focusNode,
+        onKey: _handleKeyEvent,
+        child: Builder(
+          builder: (context) {
+            if (global.takeFocus.v) {
+              FocusScope.of(context).requestFocus(_focusNode);
+            }
+            return widget.child;
+          },
+        ),
+      );
     });
   }
 }
