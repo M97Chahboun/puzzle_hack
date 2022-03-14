@@ -51,3 +51,9 @@ extension Anim on Widget {
     return AwesomeScale(key: key, child: this, millseconds: duration);
   }
 }
+
+extension TextFit on Text {
+  Widget get fitText => FittedBox(
+        child: this,
+      );
+}

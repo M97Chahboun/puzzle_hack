@@ -13,7 +13,9 @@ class ThemeIcon extends StatelessWidget {
           onPressed: () {
             global.themeMode.v = isDark ? ThemeMode.light : ThemeMode.dark;
           },
-          icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode));
+          icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode,
+          color: Theme.of(context).primaryColor,
+          ));
     });
   }
 }

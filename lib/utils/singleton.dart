@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mc/mc.dart';
 import 'package:puzzle_hack/utils/controller.dart';
 import 'package:puzzle_hack/utils/timer.dart';
 
 import 'empty.dart';
-import 'package:mc/mc.dart';
 
 class Singleton {
   static final Singleton _singleton = Singleton._internal();
@@ -15,6 +15,8 @@ class Singleton {
   String currentTile = "number";
   final McValue<bool> restart = false.mini;
   final McValue<bool> replay = false.mini;
+  final McValue<bool> upload = false.mini;
+  final McValue<bool> takeFocus = true.mini;
   final PuzzleTimer timer = PuzzleTimer(0);
   final double addX = 0.5;
   final double addY = 0.5;

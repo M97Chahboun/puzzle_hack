@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:puzzle_hack/utils/controller.dart';
 import 'package:puzzle_hack/utils/empty.dart';
+import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/utils/get_correct_tiles.dart';
 import 'package:puzzle_hack/utils/shake_curve.dart';
 import 'package:puzzle_hack/utils/show_score.dart';
 import 'package:puzzle_hack/utils/singleton.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/utils/tile_texture.dart';
 
 // ignore: must_be_immutable
@@ -95,7 +95,7 @@ class _PuzzleCardState extends State<PuzzleCard> {
                             image: AssetImage(TileTexture.getTile(
                                 global.currentTile, widget.value.toString())))
                         : null,
-                    color: Theme.of(context).canvasColor,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: const BorderRadius.all(Radius.circular(9.0))),
                 alignment: Alignment.center,
                 child: Text(
@@ -263,7 +263,8 @@ class _PuzzleCardState extends State<PuzzleCard> {
       ..remove(widget.value)
       ..insert(indexEmpty, widget.value);
     if (Singleton().currentOrder.isSameOrder(correct) &&
-        global.timer.timer.isActive) {
+        global.timer.timer.isActive &&
+        !global.replay.v) {
       global.timer.pause();
       showAppDialog(
           child: Container(

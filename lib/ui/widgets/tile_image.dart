@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_hack/utils/tile_texture.dart';
 import 'package:puzzle_hack/utils/extensions.dart';
+import 'package:puzzle_hack/utils/tile_texture.dart';
 
 class TileImage extends StatelessWidget {
   const TileImage({Key? key, required this.color}) : super(key: key);
@@ -14,15 +14,21 @@ class TileImage extends StatelessWidget {
           global.restart.v = !global.restart.v;
         },
         child: color != "number"
-            ? SizedBox(
+            ? Container(
                 height: 60.0,
                 width: 60.0,
-                child: Image.asset(TileTexture.getColor(color)),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: AssetImage(TileTexture.getColor(color))),
+                    borderRadius: const BorderRadius.all(Radius.circular(9.0))),
               )
             : Container(
                 height: 60.0,
                 width: 60.0,
-                color: Theme.of(context).primaryColor,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(9.0))),
                 child: Center(
                   child: Text(
                     "N",

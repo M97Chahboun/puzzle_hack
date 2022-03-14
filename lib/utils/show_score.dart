@@ -1,7 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:puzzle_hack/services/firebase_helper.dart';
 import 'package:puzzle_hack/utils/extensions.dart';
+import 'package:share_plus/share_plus.dart';
 
 Future<T?> showAppDialog<T>({
   required BuildContext context,
@@ -29,51 +30,60 @@ Future<T?> showAppDialog<T>({
       barrierLabel: barrierLabel,
       barrierColor: const Color(0x66000000),
       context: context,
-      pageBuilder: (context, animation, secondaryAnimation) => AppDialog(
-        child: child,
-      ),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const AppDialog(),
     );
 
 class AppDialog extends StatelessWidget {
-  /// {@macro app_dialog}
   const AppDialog({
     Key? key,
-    required this.child,
   }) : super(key: key);
-
-  /// The content of this dialog.
-  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: context.width,
-      height: context.height,
-      child: Padding(
-        padding: const EdgeInsets.all(200.0),
+    return Padding(
+      padding: context.isMobile
+          ? EdgeInsets.symmetric(
+              horizontal: context.width * 0.1, vertical: context.height * 0.3)
+          : EdgeInsets.symmetric(
+              horizontal: context.width * 0.2,
+            ),
+      child: SizedBox(
+        width: context.width,
+        height: context.height,
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(flex: 2, child: Image.asset("assets/images/dash.png")),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PopUpButton(title: "Share", onTap: () {}),
-                  const SizedBox(
-                    width: 15.0,
-                  ),
-                  PopUpButton(title: "Exit", onTap: context.pop)
-                ],
-              )
-            ],
+          padding: EdgeInsets.all(context.isMobile ? 0.0 : 200.0),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(flex: 2, child: Image.asset("assets/images/dash.png")),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PopUpButton(
+                        title: "Share",
+                        onTap: () {
+                          FirebaseHelper.sharePuzzle().then((value) {
+                            Share.share("My log key => ${value.id}");
+                            Clipboard.setData(ClipboardData(text: value.id));
+                          });
+                        }),
+                    const SizedBox(
+                      width: 15.0,
+                    ),
+                    PopUpButton(title: "Exit", onTap: context.pop)
+                  ],
+                )
+              ],
+            ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+            ),
+            width: context.width * 0.81,
+            height: context.height * 0.3,
           ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-          ),
-          width: context.width * 0.81,
-          height: context.height * 0.3,
         ),
       ),
     );

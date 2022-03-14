@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart' show McMV;
 import 'package:puzzle_hack/ui/widgets/puzzle_card.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
 import 'package:puzzle_hack/ui/widgets/timer_widget.dart';
 import 'package:puzzle_hack/utils/empty.dart';
+import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/utils/handle_keyboard.dart';
+
 import 'moves.dart';
 
 class PuzzleGame extends StatefulWidget {
@@ -38,7 +39,7 @@ class _PuzzleGameState extends State<PuzzleGame> {
         double x = initX;
         double y = initY;
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(context.isMobile ? 15.0 : 0.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,22 +50,16 @@ class _PuzzleGameState extends State<PuzzleGame> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: const [
                       Moves(),
+                      SizedBox(height: 10.0),
                       TileTheme(),
                     ],
                   ),
                 ],
-                const SizedBox(height: 10.0),
                 PuzzleKeyboardHandler(
                   child: ConstrainedBox(
                     constraints:
                         const BoxConstraints(maxHeight: 511, maxWidth: 511),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(18.0)),
-                          border: Border.all(
-                              color: Theme.of(context).primaryColor)),
+                    child: SizedBox(
                       height: context.width,
                       width: context.width,
                       child: Stack(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mc/mc.dart';
+
 import 'extensions.dart';
 
 class PuzzleKeyboardHandler extends StatefulWidget {
@@ -54,17 +56,19 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
 
   @override
   Widget build(BuildContext context) {
-    return RawKeyboardListener(
-      focusNode: _focusNode,
-      onKey: _handleKeyEvent,
-      child: Builder(
-        builder: (context) {
-          if (!_focusNode.hasFocus) {
-            FocusScope.of(context).requestFocus(_focusNode);
-          }
-          return widget.child;
-        },
-      ),
-    );
+    return McMV(global.takeFocus, () {
+      return RawKeyboardListener(
+        focusNode: _focusNode,
+        onKey: _handleKeyEvent,
+        child: Builder(
+          builder: (context) {
+            if (global.takeFocus.v) {
+              FocusScope.of(context).requestFocus(_focusNode);
+            }
+            return widget.child;
+          },
+        ),
+      );
+    });
   }
 }

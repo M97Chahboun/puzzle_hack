@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,13 +28,29 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <title>puzzle_hack</title>
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="manifest.json"> 
 </head>
+
 <body>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
+
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
+    
+    var firebaseConfig = {
+      apiKey: "AIzaSyAkPQhQoWJTZ4IPaOxY1fYpT1xiM-pRxI4",
+      authDomain: "puzzle-c4d7d.firebaseapp.com",
+      projectId: "puzzle-c4d7d",
+      storageBucket: "puzzle-c4d7d.appspot.com",
+      messagingSenderId: "804088749049",
+      appId: "1:804088749049:web:f417f2a948fb2398533b28"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {
@@ -98,4 +115,5 @@
     }
   </script>
 </body>
+
 </html>
