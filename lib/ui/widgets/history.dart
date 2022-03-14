@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:mc/mc.dart' show McMV, McValue, miniRebuild;
+import 'package:mc/mc.dart' show McMV, miniRebuild;
 import 'package:puzzle_hack/utils/extensions.dart';
 
 // ignore: must_be_immutable
@@ -27,10 +27,10 @@ class History extends StatelessWidget {
     max ??= context.height;
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: max!),
-      child: SizedBox(
+      child: Container(
         height: context.height,
         width: context.width,
-        // color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).backgroundColor,
         child: Stack(
           children: [
             McMV(

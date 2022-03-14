@@ -16,25 +16,25 @@ class Moves extends StatelessWidget {
           Text(global.moves.v.toString(),
                   style: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headline5!
                       .copyWith(fontWeight: FontWeight.bold))
               .fitText,
           Text(" Moves | ",
                   style: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headline5!
                       .copyWith(fontWeight: FontWeight.bold))
               .fitText,
           Text(global.tiles.v.toString(),
                   style: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headline5!
                       .copyWith(fontWeight: FontWeight.bold))
               .fitText,
           Text(" Tiles",
                   style: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headline5!
                       .copyWith(fontWeight: FontWeight.bold))
               .fitText,
         ],

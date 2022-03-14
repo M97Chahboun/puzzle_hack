@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:puzzle_hack/services/firebase_helper.dart';
 import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:share_plus/share_plus.dart';
@@ -33,7 +34,7 @@ Future<T?> showAppDialog<T>({
           const AppDialog(),
     );
 
-class AppDialog extends StatelessWidget {  
+class AppDialog extends StatelessWidget {
   const AppDialog({
     Key? key,
   }) : super(key: key);
@@ -44,7 +45,9 @@ class AppDialog extends StatelessWidget {
       padding: context.isMobile
           ? EdgeInsets.symmetric(
               horizontal: context.width * 0.1, vertical: context.height * 0.3)
-          : EdgeInsets.zero,
+          : EdgeInsets.symmetric(
+              horizontal: context.width * 0.2,
+            ),
       child: SizedBox(
         width: context.width,
         height: context.height,
@@ -62,8 +65,10 @@ class AppDialog extends StatelessWidget {
                     PopUpButton(
                         title: "Share",
                         onTap: () {
-                          FirebaseHelper.sharePuzzle().then((value) =>
-                              Share.share("My log key => ${value.id}"));
+                          FirebaseHelper.sharePuzzle().then((value) {
+                            Share.share("My log key => ${value.id}");
+                            Clipboard.setData(ClipboardData(text: value.id));
+                          });
                         }),
                     const SizedBox(
                       width: 15.0,

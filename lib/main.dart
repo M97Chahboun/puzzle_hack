@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         global.themeMode,
         () => MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
+              title: 'Share Puzzle',              
               themeMode: global.themeMode.v,
               darkTheme: darkTheme,
               theme: lightTheme,

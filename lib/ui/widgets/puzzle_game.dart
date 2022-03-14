@@ -39,7 +39,7 @@ class _PuzzleGameState extends State<PuzzleGame> {
         double x = initX;
         double y = initY;
         return Padding(
-          padding: EdgeInsets.all(context.isMobile ? 15.0 : 8.0),
+          padding: EdgeInsets.all(context.isMobile ? 15.0 : 0.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,22 +50,16 @@ class _PuzzleGameState extends State<PuzzleGame> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: const [
                       Moves(),
+                      SizedBox(height: 10.0),
                       TileTheme(),
                     ],
                   ),
                 ],
-                const SizedBox(height: 10.0),
                 PuzzleKeyboardHandler(
                   child: ConstrainedBox(
                     constraints:
                         const BoxConstraints(maxHeight: 511, maxWidth: 511),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          //color: Theme.of(context).primaryColor,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(18.0)),
-                          border: Border.all(
-                              color: Theme.of(context).primaryColor)),
+                    child: SizedBox(
                       height: context.width,
                       width: context.width,
                       child: Stack(

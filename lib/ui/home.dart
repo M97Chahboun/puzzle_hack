@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mc/mc.dart' show McController, McMV, McValue, mergesRebuild;
+import 'package:mc/mc.dart' show McController, McMV, McValue;
 import 'package:puzzle_hack/platforms/desktop.dart';
 import 'package:puzzle_hack/platforms/mobile.dart';
 import 'package:puzzle_hack/platforms/tablet.dart';
@@ -12,10 +13,13 @@ import 'package:puzzle_hack/utils/extensions.dart';
 import 'package:puzzle_hack/utils/get_correct_tiles.dart';
 import 'package:puzzle_hack/utils/responsive.dart';
 
+// ignore: must_be_immutable
 class Home extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController keyController = TextEditingController();
   int index = 0;
+
+  Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,10 @@ class Home extends StatelessWidget {
           FloatingActionButton(
             onPressed: () => shuffle(context),
             backgroundColor: Theme.of(context).primaryColor,
-            child: const Icon(Icons.shuffle),
+            child: const Icon(
+              Icons.shuffle,
+              color: Colors.white,
+            ),
           ),
           McMV(McValue.merge([global.replay, global.log]), () {
             return !global.upload.v
@@ -38,6 +45,7 @@ class Home extends StatelessWidget {
                     },
                     child: const Icon(
                       Icons.upload,
+                      color: Colors.white,
                     ),
                   )
                 : FloatingActionButton(
@@ -55,6 +63,7 @@ class Home extends StatelessWidget {
                         : null,
                     child: Icon(
                       global.replay.v ? Icons.pause : Icons.play_arrow,
+                      color: Colors.white,
                     ),
                   );
           })
@@ -62,8 +71,17 @@ class Home extends StatelessWidget {
       ),
       appBar: context.isMobile
           ? AppBar(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              foregroundColor: Colors.transparent,
               centerTitle: true,
-              title: const Text("Puzzle Challenge").fitText,
+              title: Text(
+                "Puzzle Challenge",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ).fitText,
               actions: const [
                 ThemeIcon(),
               ],
@@ -71,7 +89,10 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     scaffoldKey.currentState!.openDrawer();
                   },
-                  icon: const Icon(Icons.history)),
+                  icon: Icon(
+                    Icons.history,
+                    color: Theme.of(context).primaryColor,
+                  )),
             )
           : null,
       drawer: context.isMobile
@@ -111,14 +132,18 @@ class Home extends StatelessWidget {
                     TextButton(
                         onPressed: () {
                           if (keyController.text.isNotEmpty) {
-                            print(keyController.text);
+                            if (kDebugMode) {
+                              print(keyController.text);
+                            }
                             try {
                               FirebaseFirestore.instance
                                   .collection('puzzles')
                                   .doc(keyController.text.trim())
                                   .get()
                                   .then((value) {
-                                print(value.id);
+                                if (kDebugMode) {
+                                  print(value.id);
+                                }
                                 global.correctOrder =
                                     List<int>.from(value.data()!["init"]);
                                 global.currentOrder =
@@ -130,7 +155,9 @@ class Home extends StatelessWidget {
                                 global.restart.rebuildWidget();
                               }).whenComplete(() => context.pop());
                             } catch (e) {
-                              print(e);
+                              if (kDebugMode) {
+                                print(e);
+                              }
                             }
                           }
                         },
@@ -148,25 +175,8 @@ class Home extends StatelessWidget {
   void shuffle(BuildContext context) {
     global.currentOrder.clear();
     global.correctOrder.remove(16);
-    //global.correctOrder.shuffle();
-    global.correctOrder = [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14,
-      16,
-      15
-    ];
+    global.correctOrder.shuffle();
+    global.correctOrder.insert(15, 16);
     global.initShuffle = global.correctOrder;
     global.moves.v = 0;
     global.timer.reset();
