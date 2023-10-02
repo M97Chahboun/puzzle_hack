@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
-import 'package:puzzle_hack/utils/controller.dart';
-import 'package:puzzle_hack/utils/timer.dart';
+import 'package:shared_puzzle/utils/controller.dart';
+import 'package:shared_puzzle/utils/timer.dart';
 
 import 'empty.dart';
 

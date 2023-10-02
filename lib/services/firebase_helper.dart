@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:puzzle_hack/utils/singleton.dart';
+import 'package:shared_puzzle/utils/singleton.dart';
 
 class FirebaseHelper {
   static Future<DocumentReference<Map<String, dynamic>>> sharePuzzle() async {

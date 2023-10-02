@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart' show McMV, miniRebuild;
-import 'package:puzzle_hack/utils/extensions.dart';
+import 'package:shared_puzzle/utils/extensions.dart';
 
 // ignore: must_be_immutable
 class History extends StatelessWidget {

@@ -4,14 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart' show McController, McMV, McValue;
-import 'package:puzzle_hack/platforms/desktop.dart';
-import 'package:puzzle_hack/platforms/mobile.dart';
-import 'package:puzzle_hack/platforms/tablet.dart';
-import 'package:puzzle_hack/ui/widgets/history.dart';
-import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
-import 'package:puzzle_hack/utils/get_correct_tiles.dart';
-import 'package:puzzle_hack/utils/responsive.dart';
+import 'package:shared_puzzle/platforms/desktop.dart';
+import 'package:shared_puzzle/platforms/mobile.dart';
+import 'package:shared_puzzle/platforms/tablet.dart';
+import 'package:shared_puzzle/ui/widgets/history.dart';
+import 'package:shared_puzzle/ui/widgets/theme_icon.dart';
+import 'package:shared_puzzle/utils/extensions.dart';
+import 'package:shared_puzzle/utils/get_correct_tiles.dart';
+import 'package:shared_puzzle/utils/responsive.dart';
 
 // ignore: must_be_immutable
 class Home extends StatelessWidget {

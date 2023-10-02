@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:puzzle_hack/utils/awesome_animation.dart';
-import 'package:puzzle_hack/utils/singleton.dart';
+import 'package:shared_puzzle/utils/awesome_animation.dart';
+import 'package:shared_puzzle/utils/singleton.dart';
 
 extension BuildContextExtensions on BuildContext {
   double get height => MediaQuery.of(this).size.height;
