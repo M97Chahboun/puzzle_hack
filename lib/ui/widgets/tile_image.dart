@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
-import 'package:puzzle_hack/utils/tile_texture.dart';
+import 'package:shared_puzzle/utils/extensions.dart';
+import 'package:shared_puzzle/utils/tile_texture.dart';
 
 class TileImage extends StatelessWidget {
   const TileImage({Key? key, required this.color}) : super(key: key);

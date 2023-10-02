@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
+import 'package:shared_puzzle/utils/extensions.dart';
 
 class Moves extends StatelessWidget {
   const Moves({

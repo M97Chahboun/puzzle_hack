@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart' show McMV;
-import 'package:puzzle_hack/ui/widgets/puzzle_card.dart';
-import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
-import 'package:puzzle_hack/ui/widgets/timer_widget.dart';
-import 'package:puzzle_hack/utils/empty.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
-import 'package:puzzle_hack/utils/handle_keyboard.dart';
+import 'package:shared_puzzle/ui/widgets/puzzle_card.dart';
+import 'package:shared_puzzle/ui/widgets/tile_theme.dart';
+import 'package:shared_puzzle/ui/widgets/timer_widget.dart';
+import 'package:shared_puzzle/utils/empty.dart';
+import 'package:shared_puzzle/utils/extensions.dart';
+import 'package:shared_puzzle/utils/handle_keyboard.dart';
 
 import 'moves.dart';
 

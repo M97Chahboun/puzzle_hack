@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_hack/ui/widgets/history.dart';
-import 'package:puzzle_hack/ui/widgets/puzzle_game.dart';
+import 'package:shared_puzzle/ui/widgets/history.dart';
+import 'package:shared_puzzle/ui/widgets/puzzle_game.dart';
 
 class Tablet extends StatelessWidget {
   const Tablet({
@@ -17,4 +17,3 @@ class Tablet extends StatelessWidget {
     );
   }
 }
-

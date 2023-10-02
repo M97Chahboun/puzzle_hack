@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
+import 'package:shared_puzzle/utils/extensions.dart';
 
 class ThemeIcon extends StatelessWidget {
   const ThemeIcon({Key? key}) : super(key: key);
@@ -13,8 +13,9 @@ class ThemeIcon extends StatelessWidget {
           onPressed: () {
             global.themeMode.v = isDark ? ThemeMode.light : ThemeMode.dark;
           },
-          icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode,
-          color: Theme.of(context).primaryColor,
+          icon: Icon(
+            isDark ? Icons.light_mode : Icons.dark_mode,
+            color: Theme.of(context).primaryColor,
           ));
     });
   }

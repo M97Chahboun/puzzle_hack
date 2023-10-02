@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:puzzle_hack/utils/controller.dart';
-import 'package:puzzle_hack/utils/empty.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
-import 'package:puzzle_hack/utils/get_correct_tiles.dart';
-import 'package:puzzle_hack/utils/shake_curve.dart';
-import 'package:puzzle_hack/utils/show_score.dart';
-import 'package:puzzle_hack/utils/singleton.dart';
-import 'package:puzzle_hack/utils/tile_texture.dart';
+import 'package:shared_puzzle/utils/controller.dart';
+import 'package:shared_puzzle/utils/empty.dart';
+import 'package:shared_puzzle/utils/extensions.dart';
+import 'package:shared_puzzle/utils/get_correct_tiles.dart';
+import 'package:shared_puzzle/utils/shake_curve.dart';
+import 'package:shared_puzzle/utils/show_score.dart';
+import 'package:shared_puzzle/utils/singleton.dart';
+import 'package:shared_puzzle/utils/tile_texture.dart';
 
 // ignore: must_be_immutable
 class PuzzleCard extends StatefulWidget {

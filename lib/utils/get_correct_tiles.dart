@@ -1,4 +1,4 @@
-import 'package:puzzle_hack/utils/singleton.dart';
+import 'package:shared_puzzle/utils/singleton.dart';
 
 class GetCorrectTiles {
   static void getCorrectTiles([bool start = false]) {

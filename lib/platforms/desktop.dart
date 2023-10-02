@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
-import 'package:puzzle_hack/ui/widgets/history.dart';
-import 'package:puzzle_hack/ui/widgets/moves.dart';
-import 'package:puzzle_hack/ui/widgets/puzzle_game.dart';
-import 'package:puzzle_hack/ui/widgets/tile_theme.dart';
+import 'package:shared_puzzle/ui/widgets/history.dart';
+import 'package:shared_puzzle/ui/widgets/moves.dart';
+import 'package:shared_puzzle/ui/widgets/puzzle_game.dart';
+import 'package:shared_puzzle/ui/widgets/tile_theme.dart';
 
 class Desktop extends StatelessWidget {
   const Desktop({
@@ -33,8 +32,7 @@ class Desktop extends StatelessWidget {
                 height: 15.0,
               ),
               const TileTheme(),
-              Expanded(
-                  flex: 1, child: Image.asset("assets/images/dash.png")),
+              Expanded(flex: 1, child: Image.asset("assets/images/dash.png")),
             ],
           ),
         ),
@@ -42,4 +40,3 @@ class Desktop extends StatelessWidget {
     );
   }
 }
-
