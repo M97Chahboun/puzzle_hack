@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
-import 'package:puzzle_hack/ui/widgets/theme_icon.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
+import 'package:shared_puzzle/ui/widgets/theme_icon.dart';
+import 'package:shared_puzzle/utils/extensions.dart';
 
 class TimerWidget extends StatelessWidget {
   const TimerWidget({Key? key}) : super(key: key);

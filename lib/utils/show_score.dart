@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:puzzle_hack/services/firebase_helper.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
+import 'package:shared_puzzle/services/firebase_helper.dart';
+import 'package:shared_puzzle/utils/extensions.dart';
 import 'package:share_plus/share_plus.dart';
 
 Future<T?> showAppDialog<T>({

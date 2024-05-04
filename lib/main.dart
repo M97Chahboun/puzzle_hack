@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mc/mc.dart';
-import 'package:puzzle_hack/firebase_options.dart';
-import 'package:puzzle_hack/ui/home.dart';
-import 'package:puzzle_hack/utils/extensions.dart';
-import 'package:puzzle_hack/utils/theme.dart';
+import 'package:shared_puzzle/firebase_options.dart';
+import 'package:shared_puzzle/ui/home.dart';
+import 'package:shared_puzzle/utils/extensions.dart';
+import 'package:shared_puzzle/utils/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

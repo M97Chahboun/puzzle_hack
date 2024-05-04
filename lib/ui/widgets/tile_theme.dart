@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puzzle_hack/ui/widgets/tile_image.dart';
+import 'package:shared_puzzle/ui/widgets/tile_image.dart';
 
 class TileTheme extends StatelessWidget {
   const TileTheme({
